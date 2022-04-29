@@ -18,6 +18,11 @@ $hyoo_js_eval $mol_book2
 					value?val <=> code?val \
 		<= Result_page $mol_page
 			title @ \Result
+			tools /
+				<= Results_close $mol_link
+					arg * run \false
+					sub /
+						<= Results_close_icon $mol_icon_cross
 			body /
 				<= Result $hyoo_js_eval_dump
 					value <= result null
