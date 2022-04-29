@@ -2419,10 +2419,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_js_eval(this: $, code: string): any;
-}
-
-declare namespace $ {
 }
 
 declare namespace $.$$ {
@@ -2430,7 +2426,8 @@ declare namespace $.$$ {
         code(next?: string): string;
         run(next?: boolean): boolean;
         pages(): $mol_page[];
-        result(): any;
+        execute(): any;
+        result(next?: any[]): any[];
     }
     class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
         sub(): ($mol_expander | $hyoo_js_eval_dump)[] | ($mol_text_code | $hyoo_js_eval_dump)[];

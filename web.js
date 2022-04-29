@@ -7709,16 +7709,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_js_eval(code) {
-        return new Function('', code)();
-    }
-    $.$mol_js_eval = $mol_js_eval;
-})($ || ($ = {}));
-//mol/js/eval/eval.ts
-;
-"use strict";
-var $;
-(function ($) {
     $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_code_page] {\n\tflex: 0 0 40rem;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 1 0 40rem;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_dump] {\n\tmin-height: 2.5rem;\n}\n");
 })($ || ($ = {}));
 //hyoo/js/eval/-css/eval.view.css.ts
@@ -7741,8 +7731,26 @@ var $;
                     ...this.run() ? [this.Result_page()] : [],
                 ];
             }
-            result() {
-                return this.$.$mol_js_eval(this.code());
+            execute() {
+                const console = new Proxy(globalThis.console, {
+                    get: (target, field) => {
+                        if (typeof target[field] !== 'function')
+                            return target[field];
+                        return (...args) => {
+                            Promise.resolve().then(() => {
+                                this.result([...this.result(), [field, ...args]]);
+                            });
+                            return target[field](...args);
+                        };
+                    }
+                });
+                return eval(this.code());
+            }
+            result(next) {
+                this.code();
+                if (next)
+                    return next;
+                return [this.execute()];
             }
         }
         __decorate([
@@ -7754,6 +7762,9 @@ var $;
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "pages", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "execute", null);
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "result", null);
@@ -7806,10 +7817,10 @@ var $;
             $mol_mem
         ], $hyoo_js_eval_dump.prototype, "expand_content", null);
         __decorate([
-            $mol_mem
+            $mol_mem_key
         ], $hyoo_js_eval_dump.prototype, "inner_key", null);
         __decorate([
-            $mol_mem
+            $mol_mem_key
         ], $hyoo_js_eval_dump.prototype, "inner_value", null);
         $$.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
     })($$ = $.$$ || ($.$$ = {}));
