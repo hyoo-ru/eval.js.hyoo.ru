@@ -153,6 +153,7 @@
     "$mol_charset_encode",
     "$mol_compare_array",
     "$mol_page",
+    "$mol_expander",
     "$mol_js_eval",
     "$mol_js"
   ],

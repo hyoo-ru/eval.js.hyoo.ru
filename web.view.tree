@@ -423,6 +423,18 @@ $mol_page $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
 
+$mol_expander $mol_list
+	rows /
+		<= Label $mol_view
+			sub /
+				<= Trigger $mol_check_expand
+					checked?val <=> expanded?val false
+					label <= label /
+						<= title
+				<= Tools null
+		<= Content $mol_list
+			rows <= content /
+
 $hyoo_js_eval $mol_book2
 	Placeholder null
 	plugins /
@@ -437,5 +449,24 @@ $hyoo_js_eval $mol_book2
 		<= Result_page $mol_page
 			title @ \Result
 			body /
-				<= Result $mol_text_code
-					text <= result \
+				<= Result $hyoo_js_eval_dump
+					value <= result null
+					expanded true
+
+$hyoo_js_eval_dump $mol_view
+	key null
+	suffix \
+	value null
+	sub /
+		<= Key $hyoo_js_eval_dump
+			value <= key
+			suffix \:
+		<= Simple $mol_text_code
+			text <= simple \
+		<= Expand $mol_expander
+			expanded?val <=> expanded?val false
+			title <= expand_title \
+			content <= expand_content /
+	Inner!index $hyoo_js_eval_dump
+		key <= inner_key!index null
+		value <= inner_value!index null

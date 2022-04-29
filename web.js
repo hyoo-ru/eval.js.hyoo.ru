@@ -7259,6 +7259,93 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_expander extends $mol_list {
+        rows() {
+            return [
+                this.Label(),
+                this.Content()
+            ];
+        }
+        expanded(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        label() {
+            return [
+                this.title()
+            ];
+        }
+        Trigger() {
+            const obj = new this.$.$mol_check_expand();
+            obj.checked = (val) => this.expanded(val);
+            obj.label = () => this.label();
+            return obj;
+        }
+        Tools() {
+            return null;
+        }
+        Label() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.Trigger(),
+                this.Tools()
+            ];
+            return obj;
+        }
+        content() {
+            return [];
+        }
+        Content() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.content();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_expander.prototype, "expanded", null);
+    __decorate([
+        $mol_mem
+    ], $mol_expander.prototype, "Trigger", null);
+    __decorate([
+        $mol_mem
+    ], $mol_expander.prototype, "Label", null);
+    __decorate([
+        $mol_mem
+    ], $mol_expander.prototype, "Content", null);
+    $.$mol_expander = $mol_expander;
+})($ || ($ = {}));
+//mol/expander/-view.tree/expander.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/expander/expander.view.css", "[mol_expander] {\n\tflex-direction: column;\n\tflex: 1 1 auto;\n}\n\n[mol_expander_label] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n[mol_expander_trigger] {\n\tflex: auto;\n\tposition: relative;\n}\n\n[mol_expander_trigger_icon] {\n\tposition: absolute;\n\tmargin-left: -1rem;\n}\n");
+})($ || ($ = {}));
+//mol/expander/-css/expander.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_expander extends $.$mol_expander {
+            rows() {
+                return [
+                    this.Label(),
+                    ...this.expanded() ? [this.Content()] : []
+                ];
+            }
+        }
+        $$.$mol_expander = $mol_expander;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/expander/expander.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $hyoo_js_eval extends $mol_book2 {
         Placeholder() {
             return null;
@@ -7298,11 +7385,12 @@ var $;
             return obj;
         }
         result() {
-            return "";
+            return null;
         }
         Result() {
-            const obj = new this.$.$mol_text_code();
-            obj.text = () => this.result();
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.result();
+            obj.expanded = () => true;
             return obj;
         }
         Result_page() {
@@ -7333,6 +7421,84 @@ var $;
         $mol_mem
     ], $hyoo_js_eval.prototype, "Result_page", null);
     $.$hyoo_js_eval = $hyoo_js_eval;
+    class $hyoo_js_eval_dump extends $mol_view {
+        key() {
+            return null;
+        }
+        suffix() {
+            return "";
+        }
+        value() {
+            return null;
+        }
+        sub() {
+            return [
+                this.Key(),
+                this.Simple(),
+                this.Expand()
+            ];
+        }
+        Inner(index) {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.key = () => this.inner_key(index);
+            obj.value = () => this.inner_value(index);
+            return obj;
+        }
+        Key() {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.key();
+            obj.suffix = () => ":";
+            return obj;
+        }
+        simple() {
+            return "";
+        }
+        Simple() {
+            const obj = new this.$.$mol_text_code();
+            obj.text = () => this.simple();
+            return obj;
+        }
+        expanded(val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        expand_title() {
+            return "";
+        }
+        expand_content() {
+            return [];
+        }
+        Expand() {
+            const obj = new this.$.$mol_expander();
+            obj.expanded = (val) => this.expanded(val);
+            obj.title = () => this.expand_title();
+            obj.content = () => this.expand_content();
+            return obj;
+        }
+        inner_key(index) {
+            return null;
+        }
+        inner_value(index) {
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_dump.prototype, "Inner", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Key", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Simple", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "expanded", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval_dump.prototype, "Expand", null);
+    $.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
 })($ || ($ = {}));
 //hyoo/js/eval/-view.tree/eval.view.tree.ts
 ;
@@ -7349,7 +7515,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_code_page] {\n\tflex: 1 1 40rem;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 1 40rem;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n");
+    $mol_style_attach("hyoo/js/eval/eval.view.css", "[hyoo_js_eval_code_page] {\n\tflex: 1 1 40rem;\n}\n\n[hyoo_js_eval_code_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_result_page] {\n\tflex: 0 1 40rem;\n}\n\n[hyoo_js_eval_result_page_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_js_eval_dump] {\n\tmin-height: 2.5rem;\n}\n");
 })($ || ($ = {}));
 //hyoo/js/eval/-css/eval.view.css.ts
 ;
@@ -7363,13 +7529,66 @@ var $;
                 return this.$.$mol_state_arg.value('code', next) ?? '';
             }
             result() {
-                return String(this.$.$mol_js_eval(this.code()));
+                return this.$.$mol_js_eval(this.code());
             }
         }
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "result", null);
         $$.$hyoo_js_eval = $hyoo_js_eval;
+        class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
+            sub() {
+                const value = this.value();
+                const prefix = this.key() === null ? [] : [this.Key()];
+                if (value && typeof value === 'object') {
+                    return [...prefix, this.Expand()];
+                }
+                return [...prefix, this.Simple()];
+            }
+            simple() {
+                return String(this.value()) + this.suffix();
+            }
+            expand_title() {
+                const value = this.value();
+                return value[Symbol.toStringTag] || Reflect.getPrototypeOf(value).constructor.name;
+            }
+            inner_keys() {
+                let value = this.value();
+                return Reflect.ownKeys(value);
+            }
+            expand_content() {
+                return this.inner_keys().map((_, index) => this.Inner(index));
+            }
+            inner_key(index) {
+                return this.inner_keys()[index];
+            }
+            inner_value(index) {
+                const key = this.inner_key(index);
+                return this.value()[key];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "simple", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "expand_title", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "inner_keys", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "expand_content", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "inner_key", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_dump.prototype, "inner_value", null);
+        $$.$hyoo_js_eval_dump = $hyoo_js_eval_dump;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //hyoo/js/eval/eval.view.ts
