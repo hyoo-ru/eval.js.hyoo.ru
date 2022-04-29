@@ -13,3 +13,7 @@
 [hyoo_js_eval_result_page_body] {
 	padding: var(--mol_gap_block);
 }
+
+[hyoo_js_eval_dump] {
+	min-height: 2.5rem;
+}

@@ -8,7 +8,58 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		result() {
-			return String( this.$.$mol_js_eval( this.code() ) )
+			return this.$.$mol_js_eval( this.code() )
+		}
+
+	}
+	
+	export class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
+		
+		@ $mol_mem
+		sub() {
+			
+			const value = this.value()
+			
+			const prefix = this.key() === null ? [] : [ this.Key() ]
+			
+			if( value && typeof value === 'object' ) {
+				return [ ...prefix, this.Expand() ]
+			}
+			
+			return [ ... prefix, this.Simple() ]
+		}
+		
+		@ $mol_mem
+		simple() {
+			return String( this.value() ) + this.suffix()
+		}
+		
+		@ $mol_mem
+		expand_title() {
+			const value = this.value()
+			return value[ Symbol.toStringTag ] || Reflect.getPrototypeOf( value )!.constructor.name
+		}
+		
+		@ $mol_mem
+		inner_keys() {
+			let value = this.value()
+			return Reflect.ownKeys( value  )
+		}
+		
+		@ $mol_mem
+		expand_content() {
+			return this.inner_keys().map( (_,index)=> this.Inner( index ) )
+		}
+		
+		@ $mol_mem
+		inner_key( index: number ) {
+			return this.inner_keys()[ index ]
+		}
+
+		@ $mol_mem
+		inner_value( index: number ) {
+			const key = this.inner_key( index )
+			return this.value()[ key ]
 		}
 
 	}
