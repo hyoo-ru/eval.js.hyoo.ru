@@ -7810,6 +7810,11 @@ var $;
                 this.Result_page()
             ];
         }
+        Log(index) {
+            const obj = new this.$.$hyoo_js_eval_log();
+            obj.values = () => this.log(index);
+            return obj;
+        }
         Theme() {
             const obj = new this.$.$mol_theme_auto();
             return obj;
@@ -7876,13 +7881,12 @@ var $;
             ];
             return obj;
         }
-        result() {
-            return null;
+        logs() {
+            return [];
         }
         Result() {
-            const obj = new this.$.$hyoo_js_eval_dump();
-            obj.value = () => this.result();
-            obj.expanded = () => true;
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.logs();
             return obj;
         }
         Result_page() {
@@ -7896,7 +7900,13 @@ var $;
             ];
             return obj;
         }
+        log(index) {
+            return [];
+        }
     }
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval.prototype, "Log", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Theme", null);
@@ -7937,6 +7947,32 @@ var $;
         $mol_mem
     ], $hyoo_js_eval.prototype, "Result_page", null);
     $.$hyoo_js_eval = $hyoo_js_eval;
+    class $hyoo_js_eval_log extends $mol_view {
+        values() {
+            return [];
+        }
+        Dump(index) {
+            const obj = new this.$.$hyoo_js_eval_dump();
+            obj.value = () => this.dump_value(index);
+            obj.expanded = (val) => this.dump_expanded(index, val);
+            return obj;
+        }
+        dump_value(index) {
+            return null;
+        }
+        dump_expanded(index, val) {
+            if (val !== undefined)
+                return val;
+            return true;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_log.prototype, "Dump", null);
+    __decorate([
+        $mol_mem_key
+    ], $hyoo_js_eval_log.prototype, "dump_expanded", null);
+    $.$hyoo_js_eval_log = $hyoo_js_eval_log;
     class $hyoo_js_eval_dump extends $mol_view {
         key() {
             return null;
@@ -8063,7 +8099,13 @@ var $;
                 this.code();
                 if (next)
                     return next;
-                return [this.execute()];
+                return [['end', this.execute()]];
+            }
+            logs() {
+                return this.result().map((_, index) => this.Log(index));
+            }
+            log(index) {
+                return this.result()[index];
             }
         }
         __decorate([
@@ -8081,7 +8123,28 @@ var $;
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "result", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "logs", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_js_eval.prototype, "log", null);
         $$.$hyoo_js_eval = $hyoo_js_eval;
+        class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
+            sub() {
+                return this.values().map((_, index) => this.Dump(index));
+            }
+            dump_value(index) {
+                return this.values()[index];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval_log.prototype, "sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $hyoo_js_eval_log.prototype, "dump_value", null);
+        $$.$hyoo_js_eval_log = $hyoo_js_eval_log;
         class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
             sub() {
                 const value = this.value();

@@ -2365,6 +2365,7 @@ declare namespace $ {
         Placeholder(): any;
         plugins(): readonly any[];
         pages(): readonly any[];
+        Log(index: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -2376,9 +2377,16 @@ declare namespace $ {
         Code_page(): $mol_page;
         Results_close_icon(): $mol_icon_cross;
         Results_close(): $$.$mol_link;
-        result(): any;
-        Result(): $$.$hyoo_js_eval_dump;
+        logs(): readonly any[];
+        Result(): $$.$mol_list;
         Result_page(): $mol_page;
+        log(index: any): readonly any[];
+    }
+    class $hyoo_js_eval_log extends $mol_view {
+        values(): readonly any[];
+        Dump(index: any): $$.$hyoo_js_eval_dump;
+        dump_value(index: any): any;
+        dump_expanded(index: any, val?: any): boolean;
     }
     class $hyoo_js_eval_dump extends $mol_view {
         key(): any;
@@ -2408,6 +2416,12 @@ declare namespace $.$$ {
         pages(): $mol_page[];
         execute(): any;
         result(next?: any[]): any[];
+        logs(): $hyoo_js_eval_log[];
+        log(index: number): any;
+    }
+    class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
+        sub(): $hyoo_js_eval_dump[];
+        dump_value(index: number): any;
     }
     class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
         sub(): ($mol_expander | $hyoo_js_eval_dump)[] | ($mol_text_code | $hyoo_js_eval_dump)[];
