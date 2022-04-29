@@ -7688,6 +7688,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_cross extends $mol_icon {
+        path() {
+            return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
+        }
+    }
+    $.$mol_icon_cross = $mol_icon_cross;
+})($ || ($ = {}));
+//mol/icon/cross/-view.tree/cross.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_expander extends $mol_list {
         rows() {
             return [
@@ -7842,6 +7854,20 @@ var $;
             ];
             return obj;
         }
+        Results_close_icon() {
+            const obj = new this.$.$mol_icon_cross();
+            return obj;
+        }
+        Results_close() {
+            const obj = new this.$.$mol_link();
+            obj.arg = () => ({
+                run: "false"
+            });
+            obj.sub = () => [
+                this.Results_close_icon()
+            ];
+            return obj;
+        }
         result() {
             return null;
         }
@@ -7854,6 +7880,9 @@ var $;
         Result_page() {
             const obj = new this.$.$mol_page();
             obj.title = () => this.$.$mol_locale.text('$hyoo_js_eval_Result_page_title');
+            obj.tools = () => [
+                this.Results_close()
+            ];
             obj.body = () => [
                 this.Result()
             ];
@@ -7887,6 +7916,12 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Code_page", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Results_close_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_js_eval.prototype, "Results_close", null);
     __decorate([
         $mol_mem
     ], $hyoo_js_eval.prototype, "Result", null);
@@ -8003,7 +8038,7 @@ var $;
                 return this.$.$mol_state_arg.value('code', next) ?? '';
             }
             run(next) {
-                return this.$.$mol_state_arg.value('run', next?.valueOf && (next ? '' : null)) !== null;
+                return this.$.$mol_state_arg.value('run', next?.valueOf && String(next)) !== 'false';
             }
             pages() {
                 return [

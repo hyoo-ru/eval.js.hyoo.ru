@@ -441,6 +441,8 @@ $mol_page $mol_view
 			dom_name \footer
 			sub <= foot /$mol_view
 
+$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
 $mol_expander $mol_list
 	rows /
 		<= Label $mol_view
@@ -473,6 +475,11 @@ $hyoo_js_eval $mol_book2
 					value?val <=> code?val \
 		<= Result_page $mol_page
 			title @ \Result
+			tools /
+				<= Results_close $mol_link
+					arg * run \false
+					sub /
+						<= Results_close_icon $mol_icon_cross
 			body /
 				<= Result $hyoo_js_eval_dump
 					value <= result null

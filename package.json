@@ -161,6 +161,7 @@
     "$mol_string",
     "$mol_hotkey",
     "$mol_page",
+    "$mol_icon_cross",
     "$mol_expander",
     "$mol_js_eval",
     "$mol_js"

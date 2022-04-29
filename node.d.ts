@@ -2353,6 +2353,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_cross extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_expander extends $mol_list {
         rows(): readonly any[];
         expanded(val?: any): boolean;
@@ -2388,6 +2394,8 @@ declare namespace $ {
         code(val?: any): string;
         Code(): $$.$mol_textarea;
         Code_page(): $mol_page;
+        Results_close_icon(): $mol_icon_cross;
+        Results_close(): $$.$mol_link;
         result(): any;
         Result(): $$.$hyoo_js_eval_dump;
         Result_page(): $mol_page;
