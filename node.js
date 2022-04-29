@@ -7927,6 +7927,7 @@ var $;
         }
         Key() {
             const obj = new this.$.$hyoo_js_eval_dump();
+            obj.minimal_height = () => 40;
             obj.value = () => this.key();
             obj.suffix = () => ":";
             return obj;

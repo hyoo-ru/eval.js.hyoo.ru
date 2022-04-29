@@ -484,6 +484,7 @@ $hyoo_js_eval_dump $mol_view
 	value null
 	sub /
 		<= Key $hyoo_js_eval_dump
+			minimal_height 40
 			value <= key
 			suffix \:
 		<= Simple $mol_text_code
