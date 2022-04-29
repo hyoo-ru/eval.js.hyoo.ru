@@ -21,8 +21,37 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		result() {
-			return this.$.$mol_js_eval( this.code() )
+		execute() {
+			
+			const console = new Proxy( globalThis.console, {
+				get: ( target, field )=> {
+					
+					if( typeof target[ field ] !== 'function' ) return target[ field ]
+					
+					return ( ... args: any[] )=> {
+						
+						Promise.resolve().then( ()=> {
+							this.result([ ... this.result(), [ field, ... args ] ])
+						} )
+						
+						return target[ field ]( ... args )
+					}
+					
+				}
+			} )
+			
+			return eval( this.code() )
+			
+		}
+
+		@ $mol_mem
+		result( next?: any[] ) {
+			
+			this.code()
+			if( next ) return next
+			
+			return [ this.execute() ]
+			
 		}
 
 	}
@@ -61,7 +90,7 @@ namespace $.$$ {
 		@ $mol_mem
 		inner_keys() {
 			let value = this.value()
-			return Reflect.ownKeys( value  )
+			return Reflect.ownKeys( value )
 		}
 		
 		@ $mol_mem
@@ -69,12 +98,12 @@ namespace $.$$ {
 			return this.inner_keys().map( (_,index)=> this.Inner( index ) )
 		}
 		
-		@ $mol_mem
+		@ $mol_mem_key
 		inner_key( index: number ) {
 			return this.inner_keys()[ index ]
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		inner_value( index: number ) {
 			const key = this.inner_key( index )
 			return Reflect.getOwnPropertyDescriptor( this.value(), key )?.value
