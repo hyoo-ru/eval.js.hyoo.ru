@@ -1,0 +1,16 @@
+$hyoo_js_eval $mol_book2
+	Placeholder null
+	plugins /
+		<= Theme $mol_theme_auto
+	pages /
+		<= Code_page $mol_page
+			title @ \Code
+			body /
+				<= Code $mol_textarea
+					hint @ \type something..
+					value?val <=> code?val \
+		<= Result_page $mol_page
+			title @ \Result
+			body /
+				<= Result $mol_text_code
+					text <= result \
