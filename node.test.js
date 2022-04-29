@@ -8032,7 +8032,7 @@ var $;
             sub() {
                 const value = this.value();
                 const prefix = this.key() === null ? [] : [this.Key()];
-                if (value && typeof value === 'object') {
+                if (value && (typeof value === 'object')) {
                     return [...prefix, this.Expand()];
                 }
                 return [...prefix, this.Simple()];
@@ -8042,7 +8042,8 @@ var $;
             }
             expand_title() {
                 const value = this.value();
-                return value[Symbol.toStringTag] || Reflect.getPrototypeOf(value).constructor.name;
+                return Reflect.getOwnPropertyDescriptor(value, Symbol.toStringTag)?.value
+                    ?? Reflect.getPrototypeOf(value).constructor.name;
             }
             inner_keys() {
                 let value = this.value();
@@ -8056,7 +8057,7 @@ var $;
             }
             inner_value(index) {
                 const key = this.inner_key(index);
-                return this.value()[key];
+                return Reflect.getOwnPropertyDescriptor(this.value(), key)?.value;
             }
         }
         __decorate([
