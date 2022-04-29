@@ -5,6 +5,13 @@ $hyoo_js_eval $mol_book2
 	pages /
 		<= Code_page $mol_page
 			title @ \Code
+			tools /
+				<= Source $mol_link_source
+					uri \https://github.com/hyoo-ru/eval.js.hyoo.ru
+				<= Lights $mol_lights_toggle
+				<= Run $mol_check_icon
+					Icon <= Run_icon $mol_icon_play
+					checked?val <=> run?val true
 			body /
 				<= Code $mol_textarea
 					hint @ \type something..

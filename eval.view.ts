@@ -2,8 +2,22 @@ namespace $.$$ {
 
 	export class $hyoo_js_eval extends $.$hyoo_js_eval {
 		
+		@ $mol_mem
 		code( next?: string ) {
 			return this.$.$mol_state_arg.value( 'code', next ) ?? ''
+		}
+		
+		@ $mol_mem
+		run( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'run', next?.valueOf && ( next ? '' : null ) ) !== null
+		}
+		
+		@ $mol_mem
+		pages() {
+			return [
+				this.Code_page(),
+				... this.run() ? [ this.Result_page() ] : [],
+			]
 		}
 		
 		@ $mol_mem
