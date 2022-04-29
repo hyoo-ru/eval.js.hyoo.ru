@@ -24,9 +24,16 @@ $hyoo_js_eval $mol_book2
 					sub /
 						<= Results_close_icon $mol_icon_cross
 			body /
-				<= Result $hyoo_js_eval_dump
-					value <= result null
-					expanded true
+				<= Result $mol_list
+					rows <= logs /
+	Log!index $hyoo_js_eval_log
+		values <= log!index /
+
+$hyoo_js_eval_log $mol_view
+	values /
+	Dump!index $hyoo_js_eval_dump
+		value <= dump_value!index null
+		expanded?val <=> dump_expanded!index?val true
 
 $hyoo_js_eval_dump $mol_view
 	key null

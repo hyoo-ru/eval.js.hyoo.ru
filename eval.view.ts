@@ -50,10 +50,34 @@ namespace $.$$ {
 			this.code()
 			if( next ) return next
 			
-			return [ this.execute() ]
+			return [ [ 'end', this.execute() ] ]
 			
 		}
+		
+		@ $mol_mem
+		logs() {
+			return this.result().map( (_,index)=> this.Log( index ) )
+		}
+		
+		@ $mol_mem_key
+		log( index: number ) {
+			return this.result()[ index ]
+		}
 
+	}
+	
+	export class $hyoo_js_eval_log extends $.$hyoo_js_eval_log {
+		
+		@ $mol_mem
+		sub() {
+			return this.values().map( (_,index)=> this.Dump( index ) )
+		}
+		
+		@ $mol_mem_key
+		dump_value( index: number ) {
+			return this.values()[ index ]
+		}
+		
 	}
 	
 	export class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
