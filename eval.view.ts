@@ -36,7 +36,7 @@ namespace $.$$ {
 			
 			const prefix = this.key() === null ? [] : [ this.Key() ]
 			
-			if( value && typeof value === 'object' ) {
+			if( value && ( typeof value === 'object' ) ) {
 				return [ ...prefix, this.Expand() ]
 			}
 			
@@ -50,8 +50,12 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		expand_title() {
+			
 			const value = this.value()
-			return value[ Symbol.toStringTag ] || Reflect.getPrototypeOf( value )!.constructor.name
+			
+			return Reflect.getOwnPropertyDescriptor( value, Symbol.toStringTag )?.value
+				?? Reflect.getPrototypeOf( value )!.constructor.name
+			
 		}
 		
 		@ $mol_mem
@@ -73,7 +77,7 @@ namespace $.$$ {
 		@ $mol_mem
 		inner_value( index: number ) {
 			const key = this.inner_key( index )
-			return this.value()[ key ]
+			return Reflect.getOwnPropertyDescriptor( this.value(), key )?.value
 		}
 
 	}
