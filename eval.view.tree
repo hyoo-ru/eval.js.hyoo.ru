@@ -12,12 +12,13 @@ $hyoo_js_eval $mol_book2
 				<= Run $mol_check_icon
 					Icon <= Run_icon $mol_icon_play
 					checked?val <=> run?val true
+					hint <= result_label
 			body /
 				<= Code $mol_textarea
 					hint @ \type something..
 					value?val <=> code?val \
 		<= Result_page $mol_page
-			title @ \Result
+			title <= result_label @ \Result
 			tools /
 				<= Results_close $mol_link
 					arg * run \false
