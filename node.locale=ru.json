@@ -1,7 +1,7 @@
 {
 	"$hyoo_js_eval_Code_hint": "введите что-нибудь..",
 	"$hyoo_js_eval_Code_page_title": "Код",
-	"$hyoo_js_eval_Result_page_title": "Результат",
+	"$hyoo_js_eval_result_label": "Результат",
 	"$mol_lights_toggle_hint": "Переключить освещение",
 	"$mol_link_source_hint": "Исходные коды"
 }
