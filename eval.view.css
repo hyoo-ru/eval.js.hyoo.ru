@@ -1,5 +1,5 @@
 [hyoo_js_eval_code_page] {
-	flex: 1 0 40rem;
+	flex: 1 0 auto;
 }
 
 [hyoo_js_eval_code_page_body] {
@@ -7,7 +7,7 @@
 }
 
 [hyoo_js_eval_result_page] {
-	flex: 1000 0 40rem;
+	flex: 1000 0 auto;
 }
 
 [hyoo_js_eval_result_page_body] {
