@@ -6024,7 +6024,7 @@ var $;
         row_ids() {
             return [];
         }
-        row_id(index) {
+        row_id(id) {
             return null;
         }
         col_ids() {
@@ -7102,7 +7102,7 @@ var $;
             obj.selection = (val) => this.selection(val);
             return obj;
         }
-        row_numb(index) {
+        row_numb(id) {
             return 0;
         }
         highlight() {
@@ -7112,7 +7112,7 @@ var $;
             const obj = new this.$.$mol_text_code();
             obj.text = () => this.value();
             obj.render_visible_only = () => false;
-            obj.row_numb = (index) => this.row_numb(index);
+            obj.row_numb = (id) => this.row_numb(id);
             obj.sidebar_showed = () => this.sidebar_showed();
             obj.highlight = () => this.highlight();
             return obj;
@@ -7492,9 +7492,9 @@ var $;
                 this.Result_page()
             ];
         }
-        Log(index) {
+        Log(id) {
             const obj = new this.$.$hyoo_js_eval_log();
-            obj.values = () => this.log(index);
+            obj.values = () => this.log(id);
             return obj;
         }
         Theme() {
@@ -7586,7 +7586,7 @@ var $;
             ];
             return obj;
         }
-        log(index) {
+        log(id) {
             return [];
         }
     }
@@ -7637,16 +7637,16 @@ var $;
         values() {
             return [];
         }
-        Dump(index) {
+        Dump(id) {
             const obj = new this.$.$hyoo_js_eval_dump();
-            obj.value = () => this.dump_value(index);
-            obj.expanded = (val) => this.dump_expanded(index, val);
+            obj.value = () => this.dump_value(id);
+            obj.expanded = (val) => this.dump_expanded(id, val);
             return obj;
         }
-        dump_value(index) {
+        dump_value(id) {
             return null;
         }
-        dump_expanded(index, val) {
+        dump_expanded(id, val) {
             if (val !== undefined)
                 return val;
             return true;
@@ -7676,10 +7676,10 @@ var $;
                 this.Expand()
             ];
         }
-        Inner(index) {
+        Inner(id) {
             const obj = new this.$.$hyoo_js_eval_dump();
-            obj.key = () => this.inner_key(index);
-            obj.value = () => this.inner_value(index);
+            obj.key = () => this.inner_key(id);
+            obj.value = () => this.inner_value(id);
             return obj;
         }
         Key() {
@@ -7715,10 +7715,10 @@ var $;
             obj.content = () => this.expand_content();
             return obj;
         }
-        inner_key(index) {
+        inner_key(id) {
             return null;
         }
-        inner_value(index) {
+        inner_value(id) {
             return null;
         }
     }

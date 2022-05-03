@@ -1985,7 +1985,7 @@ declare namespace $ {
     class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
-        row_id(index: any): any;
+        row_id(id: any): any;
         col_ids(): readonly any[];
         records(): {};
         record(id: any): any;
@@ -2278,7 +2278,7 @@ declare namespace $ {
         length_max(): number;
         selection(val?: any): readonly number[];
         Edit(): $mol_textarea_edit;
-        row_numb(index: any): number;
+        row_numb(id: any): number;
         highlight(): string;
         View(): $$.$mol_text_code;
     }
@@ -2363,7 +2363,7 @@ declare namespace $ {
         Placeholder(): any;
         plugins(): readonly any[];
         pages(): readonly any[];
-        Log(index: any): $$.$hyoo_js_eval_log;
+        Log(id: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -2379,20 +2379,20 @@ declare namespace $ {
         logs(): readonly any[];
         Result(): $$.$mol_list;
         Result_page(): $mol_page;
-        log(index: any): readonly any[];
+        log(id: any): readonly any[];
     }
     class $hyoo_js_eval_log extends $mol_view {
         values(): readonly any[];
-        Dump(index: any): $$.$hyoo_js_eval_dump;
-        dump_value(index: any): any;
-        dump_expanded(index: any, val?: any): boolean;
+        Dump(id: any): $$.$hyoo_js_eval_dump;
+        dump_value(id: any): any;
+        dump_expanded(id: any, val?: any): boolean;
     }
     class $hyoo_js_eval_dump extends $mol_view {
         key(): any;
         suffix(): string;
         value(): any;
         sub(): readonly any[];
-        Inner(index: any): $$.$hyoo_js_eval_dump;
+        Inner(id: any): $$.$hyoo_js_eval_dump;
         Key(): $$.$hyoo_js_eval_dump;
         simple(): string;
         Simple(): $$.$mol_text_code;
@@ -2400,8 +2400,8 @@ declare namespace $ {
         expand_title(): string;
         expand_content(): readonly any[];
         Expand(): $$.$mol_expander;
-        inner_key(index: any): any;
-        inner_value(index: any): any;
+        inner_key(id: any): any;
+        inner_value(id: any): any;
     }
 }
 
