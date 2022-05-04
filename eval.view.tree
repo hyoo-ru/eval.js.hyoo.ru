@@ -15,8 +15,9 @@ $hyoo_js_eval $mol_book2
 			\
 			\// local vars
 			\const one = [1]
-			\const left =  { a: [1], b:  one  }
-			\const right = { a:  one,  b: [1] }
+			\one.push( one )
+			\const left =  { a: [1,one], b:    one  }
+			\const right = { a:    one,  b: [1,one] }
 			\
 			\// result
 			\compare( left, right )
