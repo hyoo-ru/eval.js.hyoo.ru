@@ -13,6 +13,12 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		perf() {
+			const sources = encodeURIComponent(JSON.stringify([ this.code() ]))
+			return `https://perf.js.hyoo.ru/#!sources=${sources}`
+		}
+		
+		@ $mol_mem
 		pages() {
 			return [
 				this.Menu_page(),

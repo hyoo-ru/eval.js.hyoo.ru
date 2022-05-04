@@ -41,6 +41,10 @@ $hyoo_js_eval $mol_book2
 		<= Code_page $mol_page
 			title @ \Code
 			tools /
+				<= Perf $mol_link_iconed
+					title \
+					hint @ \Measure Performance
+					uri <= perf \
 				<= Bookmark $mol_check_icon
 					Icon <= Bookmark_icon $mol_icon_bookmark_outline
 					checked?val <=> bookmark?val false
