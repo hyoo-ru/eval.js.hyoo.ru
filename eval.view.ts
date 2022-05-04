@@ -21,6 +21,19 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		code_enhanced() {
+			
+			let code = this.code()
+			
+			code = code.replaceAll(
+				/^(?:const|var|let) +(\w+)/mig,
+				( found, name )=> `this.spy( ()=>[ "${name} =", ${name} ] )\n${found}`
+			)
+			
+			return code
+		}
+		
+		@ $mol_mem
 		execute() {
 			
 			const console = new Proxy( globalThis.console, {
@@ -29,19 +42,21 @@ namespace $.$$ {
 					if( typeof target[ field ] !== 'function' ) return target[ field ]
 					
 					return ( ... args: any[] )=> {
-						
-						Promise.resolve().then( ()=> {
-							this.result([ ... this.result(), [ field, ... args ] ])
-						} )
-						
+						this.spy( ()=> [ `console.${field}:`, ... args ] )
 						return target[ field ]( ... args )
 					}
 					
 				}
 			} )
 			
-			return eval( this.code() )
+			return eval( this.code_enhanced() )
 			
+		}
+		
+		spy( args: ()=> any[] ) {
+			Promise.resolve().then( ()=> {
+				this.result([ ... this.result(), args() ])
+			} )
 		}
 
 		@ $mol_mem
@@ -50,7 +65,7 @@ namespace $.$$ {
 			this.code()
 			if( next ) return next
 			
-			return [ [ 'end', this.execute() ] ]
+			return [ [ '=', this.execute() ] ]
 			
 		}
 		
