@@ -1072,6 +1072,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_plus extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_link extends $mol_view {
         dom_name(): string;
         attr(): {
@@ -1452,12 +1458,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_icon_play extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
     class $mol_list extends $mol_view {
         render_visible_only(): boolean;
         render_over(): number;
@@ -1489,6 +1489,44 @@ declare namespace $.$$ {
         sub_visible(): $mol_view[];
         minimal_height(): number;
         force_render(path: Set<$mol_view>): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_page extends $mol_view {
+        dom_name(): string;
+        sub(): readonly any[];
+        Title(): $mol_view;
+        tools(): readonly $mol_view_content[];
+        Tools(): $mol_view;
+        head(): readonly any[];
+        Head(): $mol_view;
+        body(): readonly $mol_view_content[];
+        body_scroll_top(val?: any): number;
+        Body(): $$.$mol_scroll;
+        foot(): readonly $mol_view[];
+        Foot(): $mol_view;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    class $mol_icon_bookmark extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_bookmark_outline extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_play extends $mol_icon {
+        path(): string;
     }
 }
 
@@ -2331,26 +2369,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_page extends $mol_view {
-        dom_name(): string;
-        sub(): readonly any[];
-        Title(): $mol_view;
-        tools(): readonly $mol_view_content[];
-        Tools(): $mol_view;
-        head(): readonly any[];
-        Head(): $mol_view;
-        body(): readonly $mol_view_content[];
-        body_scroll_top(val?: any): number;
-        Body(): $$.$mol_scroll;
-        foot(): readonly $mol_view[];
-        Foot(): $mol_view;
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $ {
     class $mol_icon_cross extends $mol_icon {
         path(): string;
     }
@@ -2382,11 +2400,23 @@ declare namespace $ {
     class $hyoo_js_eval extends $mol_book2 {
         Placeholder(): any;
         plugins(): readonly any[];
+        bookmark_list(next?: any): readonly string[];
         pages(): readonly any[];
         Log(id: any): $$.$hyoo_js_eval_log;
         Theme(): $$.$mol_theme_auto;
+        Сlear_icon(): $mol_icon_plus;
+        Сlear(): $$.$mol_link;
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
+        menu_link_title(id: any): string;
+        menu_link_code(id: any): string;
+        Menu_link(id: any): $$.$mol_link;
+        menu(): readonly any[];
+        Menu(): $$.$mol_list;
+        Menu_page(): $mol_page;
+        Bookmark_icon(): $mol_icon_bookmark_outline;
+        bookmark(val?: any): boolean;
+        Bookmark(): $mol_check_icon;
         Run_icon(): $mol_icon_play;
         run(val?: any): boolean;
         Run(): $mol_check_icon;
@@ -2437,6 +2467,11 @@ declare namespace $.$$ {
         code(next?: string): string;
         run(next?: boolean): boolean;
         pages(): $mol_page[];
+        bookmark_list(next?: string[]): readonly string[];
+        bookmark(next?: boolean): boolean;
+        menu(): $mol_link[];
+        menu_link_code(index: number): string;
+        menu_link_title(index: number): string;
         code_enhanced(): string;
         execute(): any[];
         spy(args: () => any[]): void;
