@@ -7836,7 +7836,7 @@ var $;
             if (next !== undefined)
                 return next;
             return [
-                "// Example Notebook\n\n// load external script\nconst {\n\t$mol_compare_deep: compare\n} = $mol_import.script(\n\t'https://unpkg.com/mol_compare_deep'\n)\n\n// local vars\nconst one = [1]\nconst left =  { a: [1], b:  one  }\nconst right = { a:  one,  b: [1] }\n\n// result\ncompare( left, right )"
+                "// Example Notebook\n\n// load external script\nconst {\n\t$mol_compare_deep: compare\n} = $mol_import.script(\n\t'https://unpkg.com/mol_compare_deep'\n)\n\n// local vars\nconst one = [1]\none.push( one )\nconst left =  { a: [1,one], b:    one  }\nconst right = { a:    one,  b: [1,one] }\n\n// result\ncompare( left, right )"
             ];
         }
         pages() {
