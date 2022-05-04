@@ -161,7 +161,8 @@
     "$mol_hotkey",
     "$mol_page",
     "$mol_icon_cross",
-    "$mol_expander"
+    "$mol_expander",
+    "$mol_try"
   ],
   "dependencies": {
     "colorette": "*",

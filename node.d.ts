@@ -2426,6 +2426,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_try<Result>(handler: () => Result): Result | Error;
+}
+
+declare namespace $ {
 }
 
 declare namespace $.$$ {
@@ -2433,7 +2437,9 @@ declare namespace $.$$ {
         code(next?: string): string;
         run(next?: boolean): boolean;
         pages(): $mol_page[];
-        execute(): any;
+        code_enhanced(): string;
+        execute(): any[];
+        spy(args: () => any[]): void;
         result(next?: any[]): any[];
         logs(): $hyoo_js_eval_log[];
         log(index: number): any;
