@@ -1,9 +1,13 @@
 [hyoo_js_eval_code_page] {
-	flex: 0 0 auto;
+	flex: 1 0 auto;
 }
 
 [hyoo_js_eval_code_page_body] {
 	padding: var(--mol_gap_block);
+}
+
+[hyoo_js_eval_code] {
+	flex: 0 0 auto;
 }
 
 [hyoo_js_eval_result_page] {
