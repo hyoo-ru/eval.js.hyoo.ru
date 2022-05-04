@@ -36,20 +36,22 @@ namespace $.$$ {
 		@ $mol_mem
 		execute() {
 			
-			const console = new Proxy( globalThis.console, {
+			this.$.console.clear()
+			
+			const console = new Proxy( this.$.console, {
 				get: ( target, field )=> {
 					
 					if( typeof target[ field ] !== 'function' ) return target[ field ]
 					
 					return ( ... args: any[] )=> {
-						this.spy( ()=> [ `console.${field}:`, ... args ] )
+						this.spy( ()=> [ `console.${String(field)}:`, ... args ] )
 						return target[ field ]( ... args )
 					}
 					
 				}
 			} )
 			
-			return eval( this.code_enhanced() )
+			return [ '=', $mol_try( ()=> eval( this.code_enhanced() ) ) ]
 			
 		}
 		
@@ -65,7 +67,7 @@ namespace $.$$ {
 			this.code()
 			if( next ) return next
 			
-			return [ [ '=', this.execute() ] ]
+			return [ this.execute() ]
 			
 		}
 		
