@@ -7846,7 +7846,7 @@ var $;
         }
         Code() {
             const obj = new this.$.$mol_textarea();
-            obj.hint = () => this.$.$mol_locale.text('$hyoo_js_eval_Code_hint');
+            obj.hint = () => "javascript..";
             obj.value = (val) => this.code(val);
             return obj;
         }
