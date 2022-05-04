@@ -15,9 +15,45 @@ namespace $.$$ {
 		@ $mol_mem
 		pages() {
 			return [
+				this.Menu_page(),
 				this.Code_page(),
 				... this.run() ? [ this.Result_page() ] : [],
 			]
+		}
+		
+		@ $mol_mem
+		bookmark_list( next?: string[] ) {
+			return this.$.$mol_state_local.value( 'snippets', next ) ?? super.bookmark_list()
+		}
+		
+		@ $mol_mem
+		bookmark( next?: boolean ) {
+			const prev = this.bookmark_list()
+			const code = this.code()
+			if( next === undefined ) {
+				return prev.includes( code )
+			} else {
+				const list = prev.filter( str => str !== code )
+				if( next ) list.unshift( code )
+				this.bookmark_list( list )
+				return next
+			}
+		}
+		
+		@ $mol_mem
+		menu() {
+			return this.bookmark_list().map( (_, index )=> this.Menu_link( index ) )
+		}
+		
+		menu_link_code( index: number ) {
+			return this.bookmark_list()[ index ]
+		}
+		
+		@ $mol_mem_key
+		menu_link_title( index: number ) {
+			return this.bookmark_list()[ index ]
+				.replace( /\n[\s\S]*/, '' )
+				.replace( /^\/\/ +/, '' )
 		}
 		
 		@ $mol_mem
@@ -35,8 +71,6 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		execute() {
-			
-			this.$.console.clear()
 			
 			const console = new Proxy( this.$.console, {
 				get: ( target, field )=> {

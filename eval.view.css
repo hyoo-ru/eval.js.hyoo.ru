@@ -1,3 +1,11 @@
+[hyoo_js_eval_menu_page] {
+	flex: 0 0 auto;
+}
+
+[hyoo_js_eval_menu] {
+	padding: var(--mol_gap_block);
+}
+
 [hyoo_js_eval_code_page] {
 	flex: 1 0 auto;
 }
@@ -11,7 +19,7 @@
 }
 
 [hyoo_js_eval_result_page] {
-	flex: 1000 0 auto;
+	flex: 0 0 50%;
 }
 
 [hyoo_js_eval_result_page_body] {
