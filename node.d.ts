@@ -1513,6 +1513,45 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_image extends $mol_view {
+        dom_name(): string;
+        field(): {
+            src: string;
+            alt: string;
+            loading: string;
+        };
+        uri(): string;
+        loading(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_link_iconed extends $mol_link {
+        sub(): readonly any[];
+        content(): readonly any[];
+        host(): string;
+        icon(): string;
+        Icon(): $mol_image;
+        title(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_link_iconed extends $.$mol_link_iconed {
+        icon(): string;
+        host(): string;
+        title(): string;
+        sub(): readonly any[];
+    }
+}
+
+declare namespace $ {
     class $mol_icon_bookmark extends $mol_icon {
         path(): string;
     }
@@ -2154,45 +2193,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_image extends $mol_view {
-        dom_name(): string;
-        field(): {
-            src: string;
-            alt: string;
-            loading: string;
-        };
-        uri(): string;
-        loading(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_link_iconed extends $mol_link {
-        sub(): readonly any[];
-        content(): readonly any[];
-        host(): string;
-        icon(): string;
-        Icon(): $mol_image;
-        title(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_link_iconed extends $.$mol_link_iconed {
-        icon(): string;
-        host(): string;
-        title(): string;
-        sub(): readonly any[];
-    }
-}
-
-declare namespace $ {
     class $mol_text extends $mol_list {
         uri_base(): string;
         text(): string;
@@ -2414,6 +2414,8 @@ declare namespace $ {
         menu(): readonly any[];
         Menu(): $$.$mol_list;
         Menu_page(): $mol_page;
+        perf(): string;
+        Perf(): $$.$mol_link_iconed;
         Bookmark_icon(): $mol_icon_bookmark_outline;
         bookmark(val?: any): boolean;
         Bookmark(): $mol_check_icon;
@@ -2466,6 +2468,7 @@ declare namespace $.$$ {
     class $hyoo_js_eval extends $.$hyoo_js_eval {
         code(next?: string): string;
         run(next?: boolean): boolean;
+        perf(): string;
         pages(): $mol_page[];
         bookmark_list(next?: string[]): readonly string[];
         bookmark(next?: boolean): boolean;
