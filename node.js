@@ -8285,7 +8285,7 @@ var $;
             }
             code_enhanced() {
                 let code = this.code();
-                code = code.replaceAll(/^(?:const|var|let) +(\w+)/mig, (found, name) => `this.spy( ()=>[ "${name} =", ${name} ] )\n${found}`);
+                code = code.replaceAll(/^(\s*)(?:const|var|let) +(\w+)/mig, (found, indent, name) => `${indent}this.spy( ()=>[ "${name} =", ${name} ] )\n${found}`);
                 return code;
             }
             execute() {
