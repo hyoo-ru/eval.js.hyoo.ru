@@ -25,10 +25,10 @@ $hyoo_js_eval $mol_book2
 		<= Menu_page $mol_page
 			title @ \Bookmarks
 			tools /
-				<= Сlear $mol_link
+				<= Clear $mol_link
 					arg * code null
 					sub /
-						<= Сlear_icon $mol_icon_plus
+						<= Clear_icon $mol_icon_plus
 				<= Source $mol_link_source
 					uri \https://github.com/hyoo-ru/eval.js.hyoo.ru
 				<= Lights $mol_lights_toggle
@@ -67,30 +67,41 @@ $hyoo_js_eval $mol_book2
 			body /
 				<= Result $mol_list
 					rows <= logs /
-	Log!index $hyoo_js_eval_log
-		values <= log!index /
+	Log* $hyoo_js_eval_log
+		values <= log* /
 
 $hyoo_js_eval_log $mol_view
 	values /
-	Dump!index $hyoo_js_eval_dump
-		value <= dump_value!index null
-		expanded?val <=> dump_expanded!index?val true
+	sub /
+		<= Prefix $mol_view sub / <= prefix \
+		<= Dump*0 $hyoo_js_eval_dump
+			value <= dump_value* null
+			expanded? <=> dump_expanded*? true
 
-$hyoo_js_eval_dump $mol_view
-	key null
-	suffix \
-	value null
+$hyoo_js_eval_pair $mol_view
 	sub /
 		<= Key $hyoo_js_eval_dump
-			minimal_height 40
-			value <= key
-			suffix \:
+			value <= key null
+		<= Suffix $mol_view sub / <= suffix \
+		<= Value $hyoo_js_eval_dump
+			value <= value null
+
+$hyoo_js_eval_dump $mol_view
+	value null
+	sub /
 		<= Simple $mol_text_code
 			text <= simple \
 		<= Expand $mol_expander
 			expanded?val <=> expanded?val false
-			title <= expand_title \
+			Trigger <= Expand_head $mol_check_expand
+				minimal_height 24
+				minimal_width 24
+				checked?val <=> expanded?val false
+				label /
+					<= Expand_title $mol_text_code
+						text <= expand_title \
 			content <= expand_content /
-	Inner!index $hyoo_js_eval_dump
-		key <= inner_key!index null
-		value <= inner_value!index null
+				<= Pair*0 $hyoo_js_eval_pair
+					key <= pair_key* null
+					suffix <= pair_suffix* null
+					value <= pair_value* null

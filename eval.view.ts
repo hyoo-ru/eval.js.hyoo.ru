@@ -84,7 +84,7 @@ namespace $.$$ {
 					if( typeof target[ field ] !== 'function' ) return target[ field ]
 					
 					return ( ... args: any[] )=> {
-						this.spy( ()=> [ `console.${String(field)}:`, ... args ] )
+						this.spy( ()=> [ `${String(field)}:`, ... args ] )
 						return target[ field ]( ... args )
 					}
 					
@@ -127,7 +127,14 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		sub() {
-			return this.values().map( (_,index)=> this.Dump( index ) )
+			return [
+				this.Prefix(),
+				... this.values().slice(1).map( (_,index)=> this.Dump( index + 1 ) )
+			]
+		}
+		
+		prefix() {
+			return this.values()[0]
 		}
 		
 		@ $mol_mem_key
@@ -137,25 +144,32 @@ namespace $.$$ {
 		
 	}
 	
+	export class $hyoo_js_eval_pair extends $.$hyoo_js_eval_pair {
+		
+		@ $mol_mem
+		sub() {
+			return this.suffix()
+				? [ this.Key(), this.Suffix(), this.Value() ]
+				: [ this.Value() ]
+		}
+		
+	}
+		
 	export class $hyoo_js_eval_dump extends $.$hyoo_js_eval_dump {
 		
 		@ $mol_mem
 		sub() {
-			
 			const value = this.value()
-			
-			const prefix = this.key() === null ? [] : [ this.Key() ]
-			
-			if( value && ( typeof value === 'object' ) ) {
-				return [ ...prefix, this.Expand() ]
-			}
-			
-			return [ ... prefix, this.Simple() ]
+			if( !value ) return [ this.Simple() ]
+			if( typeof value === 'object' ) return [ this.Expand() ]
+			if( typeof value === 'function' ) return [ this.Expand() ]
+			return [ this.Simple() ]
 		}
 		
 		@ $mol_mem
 		simple() {
-			return String( this.value() ) + this.suffix()
+			const value = this.value()
+			return value ? String( value ) : JSON.stringify( value ) ?? 'undefined'
 		}
 		
 		@ $mol_mem
@@ -163,31 +177,52 @@ namespace $.$$ {
 			
 			const value = this.value()
 			
+			if( typeof value === 'function' ) {
+				const name = Reflect.getOwnPropertyDescriptor( value, 'name' )?.value
+				if( name ) return name + '(){}'
+			}
+			
+			if( value instanceof RegExp ) return String( value )
+			if( value instanceof Date ) return value.toISOString()
+			
 			return Reflect.getOwnPropertyDescriptor( value, Symbol.toStringTag )?.value
 				?? Reflect.getPrototypeOf( value )!.constructor.name
-			
 		}
 		
 		@ $mol_mem
-		inner_keys() {
+		pairs_data() {
+			
 			let value = this.value()
-			return Reflect.ownKeys( value )
+			
+			const self = Reflect.ownKeys( value )
+				.map( key => [ key, '∶', Reflect.getOwnPropertyDescriptor( value, key )?.value ] )
+			
+			const map = value instanceof Map
+				? [ ... value ].map( ([ key, val ])=> [ key, '🡒', val ] )
+				: []
+			
+			const set = value instanceof Set
+				? [ ... value ].map( val => [ null, '', val ] )
+				: []
+			
+			return [ ... self, ... map, ... set ]
 		}
 		
 		@ $mol_mem
 		expand_content() {
-			return this.inner_keys().map( (_,index)=> this.Inner( index ) )
+			return this.pairs_data().map( (_,index)=> this.Pair( index ) )
 		}
 		
-		@ $mol_mem_key
-		inner_key( index: number ) {
-			return this.inner_keys()[ index ]
+		pair_key( index: number ) {
+			return this.pairs_data()[ index ][0]
 		}
 
-		@ $mol_mem_key
-		inner_value( index: number ) {
-			const key = this.inner_key( index )
-			return Reflect.getOwnPropertyDescriptor( this.value(), key )?.value
+		pair_suffix( index: number ) {
+			return this.pairs_data()[ index ][1]
+		}
+
+		pair_value( index: number ) {
+			return this.pairs_data()[ index ][2]
 		}
 
 	}
