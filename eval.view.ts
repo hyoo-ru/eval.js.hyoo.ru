@@ -179,14 +179,17 @@ namespace $.$$ {
 			
 			if( typeof value === 'function' ) {
 				const name = Reflect.getOwnPropertyDescriptor( value, 'name' )?.value
-				if( name ) return name + '(){}'
+				const source = Function.prototype.toString.call( value )
+				const args = source.replace( /\)[\s\S]*$/g, ')' ).replace( /^[\s\S]*\(/g, '(' )
+				if( name ) return name + args + '{}'
 			}
 			
 			if( value instanceof RegExp ) return String( value )
 			if( value instanceof Date ) return value.toISOString()
 			
 			return Reflect.getOwnPropertyDescriptor( value, Symbol.toStringTag )?.value
-				?? Reflect.getPrototypeOf( value )!.constructor.name
+				?? Reflect.getPrototypeOf( value )?.constructor.name
+				?? 'Object'
 		}
 		
 		@ $mol_mem
@@ -194,8 +197,13 @@ namespace $.$$ {
 			
 			let value = this.value()
 			
-			const self = Reflect.ownKeys( value )
-				.map( key => [ key, '∶', Reflect.getOwnPropertyDescriptor( value, key )?.value ] )
+			const self = [] as any[][]
+			for( const key of Reflect.ownKeys( value ) ) {
+				const descr = Reflect.getOwnPropertyDescriptor( value, key )!
+				if( 'value' in descr ) self.push([ key, '∶', descr.value ])
+				if( 'get' in descr ) self.push([ 'get ' + String( key ), '∶', descr.get ])
+				if( 'set' in descr ) self.push([ 'set ' + String( key ), '∶', descr.set ])
+			}
 			
 			const map = value instanceof Map
 				? [ ... value ].map( ([ key, val ])=> [ key, '🡒', val ] )
@@ -204,8 +212,16 @@ namespace $.$$ {
 			const set = value instanceof Set
 				? [ ... value ].map( val => [ null, '', val ] )
 				: []
+				
+			const proto = Reflect.getPrototypeOf( value )
 			
-			return [ ... self, ... map, ... set ]
+			return [
+				... self,
+				... map,
+				... set,
+				[ '[[prototype]]', ':', proto ]
+			]
+			
 		}
 		
 		@ $mol_mem
