@@ -8125,9 +8125,6 @@ var $;
         __decorate([
             $mol_mem
         ], $mol_dump_list.prototype, "sub", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_dump_list.prototype, "dump_value", null);
         $$.$mol_dump_list = $mol_dump_list;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
