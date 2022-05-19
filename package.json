@@ -169,6 +169,9 @@
     "$mol_string",
     "$mol_hotkey",
     "$mol_icon_cross",
+    "$mol_dump_list",
+    "$mol_dump",
+    "$mol_dump_value",
     "$mol_expander",
     "$mol_try"
   ],
