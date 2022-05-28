@@ -140,6 +140,7 @@
     "$mol_icon_bookmark",
     "$mol_icon_play",
     "$mol_textarea",
+    "$mol_stack",
     "$mol_text_code",
     "$mol_text",
     "$mol_paragraph",

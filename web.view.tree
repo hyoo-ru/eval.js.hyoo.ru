@@ -82,8 +82,6 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
-	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -102,6 +100,8 @@ $mol_button $mol_view
 		value <= error \
 
 $mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
 
 $mol_button_minor $mol_button_typed
 
@@ -181,6 +181,8 @@ $mol_icon_bookmark_outline $mol_icon path \M17,18L12,15.82L7,18V5H17M17,3H7C5.9,
 
 $mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
 
+$mol_stack $mol_view
+
 $mol_paragraph $mol_view
 	line_height 24
 	letter_width 7
@@ -225,6 +227,7 @@ $mol_text_code_row $mol_paragraph
 	Token_link* $mol_text_code_token_link
 		haystack <= token_text* \
 		needle <= highlight \
+	find_pos* null
 
 $mol_text_code $mol_list
 	attr *
@@ -232,6 +235,7 @@ $mol_text_code $mol_list
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
+	find_pos* null
 	Row* $mol_text_code_row
 		numb_showed <= sidebar_showed
 		numb <= row_numb* 0
@@ -415,7 +419,7 @@ $mol_text_span $mol_paragraph
 		^
 		mol_text_type <= type \
 
-$mol_textarea $mol_view
+$mol_textarea $mol_stack
 	attr *
 		^
 		mol_textarea_clickable <= clickable?val false
