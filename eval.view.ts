@@ -69,7 +69,7 @@ namespace $.$$ {
 			
 			code = code.replaceAll(
 				/^([ \t]*)(?:const|var|let) +(\w+)/mig,
-				( found, indent, name )=> `${indent}spy( ()=>[ "${indent}${name} =", ${name} ] )\n${found}`
+				( found, indent, name )=> `spy( ()=>[ "${indent}${name} =", ${name} ] );${found}`
 			)
 			
 			return code
@@ -108,7 +108,10 @@ namespace $.$$ {
 			const [ line, col ] = pos[1].split( ':' ).map( Number )
 			const row = this.Code().View().Row( line )
 			
-			return row.find_pos( col - 1 )
+			const shift = this.code_enhanced().split('\n')[ line - 1 ]
+				?.match( /^\w*spy\( \(\).*?\);/ )?.[0]?.length ?? 0
+			
+			return row.find_pos( col - 1 - shift )
 			
 		}
 		
