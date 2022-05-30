@@ -450,6 +450,20 @@ $mol_textarea_edit $mol_string
 		^
 		scrollTop 0
 
+$mol_icon_flash $mol_icon path \M7,2V13H10V22L17,10H13L17,2H7Z
+
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	offset /
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_expander $mol_list
@@ -547,7 +561,14 @@ $hyoo_js_eval $mol_book2
 			body /
 				<= Code $mol_textarea
 					hint \javascript..
+					sidebar_showed true
 					value?val <=> code?val \
+				<= Error_mark $mol_follower
+					Anchor <= error_anchor null
+					offset <= error_offset /
+						0
+						0
+					Sub <= Error_icon $mol_icon_flash
 		<= Result_page $mol_page
 			title <= result_label @ \Result
 			tools /
