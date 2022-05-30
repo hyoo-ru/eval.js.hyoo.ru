@@ -56,7 +56,14 @@ $hyoo_js_eval $mol_book2
 			body /
 				<= Code $mol_textarea
 					hint \javascript..
+					sidebar_showed true
 					value?val <=> code?val \
+				<= Error_mark $mol_follower
+					Anchor <= error_anchor null
+					offset <= error_offset /
+						0
+						0
+					Sub <= Error_icon $mol_icon_flash
 		<= Result_page $mol_page
 			title <= result_label @ \Result
 			tools /

@@ -69,7 +69,7 @@ namespace $.$$ {
 			
 			code = code.replaceAll(
 				/^([ \t]*)(?:const|var|let) +(\w+)/mig,
-				( found, indent, name )=> `${indent}this.spy( ()=>[ "${indent}${name} =", ${name} ] )\n${found}`
+				( found, indent, name )=> `${indent}spy( ()=>[ "${indent}${name} =", ${name} ] )\n${found}`
 			)
 			
 			return code
@@ -90,9 +90,40 @@ namespace $.$$ {
 					
 				}
 			} )
+			const spy = this.spy.bind( this )
 			
 			return [ '=', $mol_try( ()=> eval( this.code_enhanced() ) ) ]
 			
+		}
+		
+		@ $mol_mem
+		error_pos() {
+			
+			const [ eq, val ] = this.execute()
+			if(!( val instanceof Error )) return null
+			
+			const pos = val.stack!.match( /(?:<anonymous>| eval).*:(\d+:\d+)/ )
+			if( !pos ) return null
+			
+			const [ line, col ] = pos[1].split( ':' ).map( Number )
+			const row = this.Code().View().Row( line )
+			
+			return row.find_pos( col - 1 )
+			
+		}
+		
+		error_anchor() {
+			return this.error_pos()?.token
+		}
+		
+		@ $mol_mem
+		error_offset() {
+			const pos = this.error_pos()!
+			return [ pos.offset / pos.token.haystack().length, 0 ]
+		}
+		
+		Error_mark() {
+			return this.run() ? super.Error_mark() : null as any
 		}
 		
 		spy( args: ()=> any[] ) {
