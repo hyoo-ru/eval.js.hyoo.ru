@@ -29,6 +29,8 @@
     "$mol_delegate",
     "$mol_type_writable",
     "$mol_type",
+    "$mol_term_color",
+    "$mol_term",
     "$mol_env",
     "$mol_offline_install",
     "$mol_offline",
@@ -72,6 +74,7 @@
     "$mol_memo",
     "$mol_wrapper",
     "$mol_dom_qname",
+    "$mol_wire_watch",
     "$mol_const",
     "$mol_dom_render_attributes",
     "$mol_dom_render",
@@ -178,7 +181,6 @@
     "$mol_try"
   ],
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*",
     "chokidar": "*"
   }
