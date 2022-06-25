@@ -131,7 +131,9 @@ namespace $.$$ {
 		
 		spy( args: ()=> any[] ) {
 			Promise.resolve().then( ()=> {
-				this.result([ ... this.result(), args() ])
+				try {
+					this.result([ ... this.result(), args() ])
+				} catch {}
 			} )
 		}
 
