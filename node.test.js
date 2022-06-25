@@ -9089,7 +9089,10 @@ var $;
             }
             spy(args) {
                 Promise.resolve().then(() => {
-                    this.result([...this.result(), args()]);
+                    try {
+                        this.result([...this.result(), args()]);
+                    }
+                    catch { }
                 });
             }
             result(next) {
