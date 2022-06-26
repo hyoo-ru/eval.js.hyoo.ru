@@ -5665,6 +5665,15 @@ var $;
             };
             return regexp2;
         }
+        static vary(sources) {
+            const groups = [];
+            const chunks = sources.map(source => {
+                const regexp = $mol_regexp.from(source);
+                groups.push(...regexp.groups);
+                return regexp.source;
+            });
+            return new $mol_regexp(`(?:${chunks.join('|')})`, '', groups);
+        }
         static optional(source) {
             return $mol_regexp.repeat_greedy(source, 0, 1);
         }
@@ -6624,7 +6633,7 @@ var $;
             return this.hint();
         }
         spellcheck() {
-            return false;
+            return true;
         }
         autocomplete_native() {
             return "";
