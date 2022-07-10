@@ -48,10 +48,11 @@ $mol_icon $mol_svg_root
 $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 
 $mol_link $mol_view
+	uri \
 	dom_name \a
 	attr *
 		^
-		href <= uri \
+		href <= uri_toggle \
 		title <= hint \
 		target <= target \_self
 		download <= file_name \
