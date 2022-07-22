@@ -68,7 +68,7 @@ namespace $.$$ {
 			let code = this.code()
 			
 			code = code.replaceAll(
-				/^([ \t]*)(?:const|var|let) +(\w+)/mig,
+				/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig,
 				( found, indent, name )=> `spy( ()=>[ "${indent}${name} =", ${name} ] );${found}`
 			)
 			
