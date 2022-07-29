@@ -76,3 +76,4 @@ $hyoo_js_eval $mol_book2
 					rows <= logs /
 						<= Log*0 $mol_dump_list
 							values <= log* /
+							prototypes true
