@@ -1593,6 +1593,8 @@ declare namespace $ {
         };
         sub(): readonly any[];
         tabindex(): number;
+        Logo(): any;
+        title_content(): readonly any[];
         Title(): $mol_view;
         tools(): readonly $mol_view_content[];
         Tools(): $mol_view;
