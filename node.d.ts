@@ -459,6 +459,27 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    namespace $$ { }
+    const $mol_object_field: unique symbol;
+    class $mol_object extends $mol_object2 {
+        static make<Instance>(this: {
+            new (): Instance;
+        }, config: Partial<Instance>): Instance;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_time extends $mol_object {
+        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
+        static now(precision: number): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_wire_easing(next: any): any;
+}
+
+declare namespace $ {
     function $mol_wire_patch(obj: object): void;
 }
 
@@ -635,16 +656,6 @@ declare namespace $ {
         readonly space: $mol_style_func<"var", "--mol_gap_space">;
         readonly blur: $mol_style_func<"var", "--mol_gap_blur">;
     };
-}
-
-declare namespace $ {
-    namespace $$ { }
-    const $mol_object_field: unique symbol;
-    class $mol_object extends $mol_object2 {
-        static make<Instance>(this: {
-            new (): Instance;
-        }, config: Partial<Instance>): Instance;
-    }
 }
 
 declare namespace $ {
@@ -1114,13 +1125,6 @@ declare namespace $ {
         font_size(): number;
         font_family(): string;
         style_size(): {};
-    }
-}
-
-declare namespace $ {
-    class $mol_state_time extends $mol_object {
-        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
-        static now(precision: number): number;
     }
 }
 
