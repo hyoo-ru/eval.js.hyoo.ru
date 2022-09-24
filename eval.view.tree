@@ -57,6 +57,7 @@ $hyoo_js_eval $mol_book2
 				<= Code $mol_textarea
 					hint \javascript..
 					sidebar_showed true
+					spellcheck false
 					value?val <=> code?val \
 				<= Error_mark $mol_follower
 					Anchor <= error_anchor null
