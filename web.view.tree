@@ -16,6 +16,15 @@ $mol_book2 $mol_scroll
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
 $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
@@ -264,15 +273,6 @@ $mol_text_code $mol_stack
 			hint @ \Copy whole code
 			text <= text
 
-$mol_hotkey $mol_plugin
-	event *
-		^
-		keydown?event <=> keydown?event null
-	key *
-	mod_ctrl false
-	mod_alt false
-	mod_shift false
-
 $mol_string $mol_view
 	dom_name \input
 	enabled true
@@ -321,6 +321,7 @@ $mol_textarea $mol_stack
 			spellcheck <= spellcheck true
 			length_max <= length_max +Infinity
 			selection?val <=> selection?val /number
+			bring => bring
 		<= View $mol_text_code
 			text <= value
 			render_visible_only false
@@ -405,6 +406,9 @@ $hyoo_js_eval $mol_book2
 	Placeholder null
 	plugins /
 		<= Theme $mol_theme_auto
+		<= Submit $mol_hotkey
+			key * enter? <=> submit? null
+			mod_ctrl true
 	bookmark_list? /string
 		\
 			\// Example Notebook
@@ -443,6 +447,7 @@ $hyoo_js_eval $mol_book2
 							arg * code <= menu_link_code* \
 		<= Code_page $mol_page
 			title @ \Code
+			bring <= bring
 			tools /
 				<= Perf $mol_link_iconed
 					title \
@@ -458,6 +463,7 @@ $hyoo_js_eval $mol_book2
 					hint <= result_label
 			body /
 				<= Code $mol_textarea
+					bring => bring
 					hint \javascript..
 					sidebar_showed true
 					spellcheck false
