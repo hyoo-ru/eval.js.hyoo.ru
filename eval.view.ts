@@ -9,7 +9,11 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		run( next?: boolean ) {
-			return this.$.$mol_state_arg.value( 'run', next?.valueOf && String( next ) ) !== 'false'
+			return this.$.$mol_state_arg.value( 'run', next?.valueOf && String( next ) ) === 'true'
+		}
+		
+		submit() {
+			this.run( true )
 		}
 		
 		@ $mol_mem
