@@ -298,7 +298,7 @@ var $;
             if (key === 'id')
                 continue;
             if (typeof props[key] === 'string') {
-                if (key in node)
+                if (typeof node[key] === 'string')
                     node[key] = props[key];
                 node.setAttribute(key, props[key]);
             }
@@ -1362,6 +1362,20 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test({
+        'FQN of anon function'($) {
+            const $$ = Object.assign($, { $mol_func_name_test: (() => () => { })() });
+            $mol_assert_equal($$.$mol_func_name_test.name, '');
+            $mol_assert_equal($$.$mol_func_name($$.$mol_func_name_test), '$mol_func_name_test');
+            $mol_assert_equal($$.$mol_func_name_test.name, '$mol_func_name_test');
+        },
+    });
+})($ || ($ = {}));
+//mol/func/name/name.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     $mol_test({
         'Primitives'() {
@@ -1880,20 +1894,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/memo/memo.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'FQN of anon function'($) {
-            const $$ = Object.assign($, { $mol_func_name_test: (() => () => { })() });
-            $mol_assert_equal($$.$mol_func_name_test.name, '');
-            $mol_assert_equal($$.$mol_func_name($$.$mol_func_name_test), '$mol_func_name_test');
-            $mol_assert_equal($$.$mol_func_name_test.name, '$mol_func_name_test');
-        },
-    });
-})($ || ($ = {}));
-//mol/func/name/name.test.ts
 ;
 "use strict";
 var $;
