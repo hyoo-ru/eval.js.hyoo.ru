@@ -120,6 +120,7 @@
     "$mol_theme_auto",
     "$mol_lights",
     "$mol_state_arg",
+    "$mol_action",
     "$mol_media",
     "$mol_state_local",
     "$mol_hotkey",
