@@ -129,6 +129,10 @@ namespace $.$$ {
 			return [ pos.offset / pos.token.haystack().length, 0 ]
 		}
 		
+		error_message() {
+			return this.execute()[1]?.message
+		}
+		
 		Error_mark() {
 			return this.run() ? super.Error_mark() : null as any
 		}

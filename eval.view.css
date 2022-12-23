@@ -31,6 +31,5 @@
 }
 
 [hyoo_js_eval_error_icon] {
-	pointer-events: none;
 	color: var(--mol_theme_focus);
 }
