@@ -7907,7 +7907,7 @@ var $;
         Preview_dom() {
             const obj = new this.$.$mol_view();
             obj.dom_node = () => this.preview_dom();
-            obj.dom_node_actual = () => this.preview();
+            obj.render = () => this.preview();
             return obj;
         }
         Preview() {
@@ -7973,6 +7973,21 @@ var $;
     $.$mol_dump_value = $mol_dump_value;
 })($ || ($ = {}));
 //mol/dump/value/-view.tree/value.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_try(handler) {
+        try {
+            return handler();
+        }
+        catch (error) {
+            return error;
+        }
+    }
+    $.$mol_try = $mol_try;
+})($ || ($ = {}));
+//mol/try/try.node.ts
 ;
 "use strict";
 var $;
@@ -8083,6 +8098,8 @@ var $;
             preview_dom() {
                 const value = this.value();
                 if (value instanceof Element) {
+                    if ($mol_try(() => value.localName) instanceof Error)
+                        return null;
                     if (value.isConnected)
                         return null;
                     return value;
@@ -8555,21 +8572,6 @@ var $;
     $.$hyoo_js_eval = $hyoo_js_eval;
 })($ || ($ = {}));
 //hyoo/js/eval/-view.tree/eval.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_try(handler) {
-        try {
-            return handler();
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    $.$mol_try = $mol_try;
-})($ || ($ = {}));
-//mol/try/try.node.ts
 ;
 "use strict";
 var $;

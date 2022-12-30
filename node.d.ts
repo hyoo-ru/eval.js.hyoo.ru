@@ -2466,6 +2466,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_try<Result>(handler: () => Result): Result | Error;
+}
+
+declare namespace $ {
 }
 
 declare namespace $.$$ {
@@ -2549,10 +2553,6 @@ declare namespace $ {
         Result(): $$.$mol_list;
         Result_page(): $mol_page;
     }
-}
-
-declare namespace $ {
-    function $mol_try<Result>(handler: () => Result): Result | Error;
 }
 
 declare namespace $ {

@@ -7624,7 +7624,7 @@ var $;
         Preview_dom() {
             const obj = new this.$.$mol_view();
             obj.dom_node = () => this.preview_dom();
-            obj.dom_node_actual = () => this.preview();
+            obj.render = () => this.preview();
             return obj;
         }
         Preview() {
@@ -7690,6 +7690,33 @@ var $;
     $.$mol_dump_value = $mol_dump_value;
 })($ || ($ = {}));
 //mol/dump/value/-view.tree/value.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    let error;
+    let result;
+    let handler;
+    function $mol_try(handler2) {
+        handler = handler2;
+        error = undefined;
+        result = undefined;
+        window.dispatchEvent(new Event('$mol_try'));
+        const error2 = error;
+        const result2 = result;
+        error = undefined;
+        result = undefined;
+        return error2 || result2;
+    }
+    $.$mol_try = $mol_try;
+    self.addEventListener('$mol_try', (event) => {
+        result = handler();
+    }, true);
+    self.addEventListener('error', (event) => {
+        error = event.error;
+    }, true);
+})($ || ($ = {}));
+//mol/try/try.web.ts
 ;
 "use strict";
 var $;
@@ -7800,6 +7827,8 @@ var $;
             preview_dom() {
                 const value = this.value();
                 if (value instanceof Element) {
+                    if ($mol_try(() => value.localName) instanceof Error)
+                        return null;
                     if (value.isConnected)
                         return null;
                     return value;
@@ -8272,33 +8301,6 @@ var $;
     $.$hyoo_js_eval = $hyoo_js_eval;
 })($ || ($ = {}));
 //hyoo/js/eval/-view.tree/eval.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    let error;
-    let result;
-    let handler;
-    function $mol_try(handler2) {
-        handler = handler2;
-        error = undefined;
-        result = undefined;
-        window.dispatchEvent(new Event('$mol_try'));
-        const error2 = error;
-        const result2 = result;
-        error = undefined;
-        result = undefined;
-        return error2 || result2;
-    }
-    $.$mol_try = $mol_try;
-    self.addEventListener('$mol_try', (event) => {
-        result = handler();
-    }, true);
-    self.addEventListener('error', (event) => {
-        error = event.error;
-    }, true);
-})($ || ($ = {}));
-//mol/try/try.web.ts
 ;
 "use strict";
 var $;
