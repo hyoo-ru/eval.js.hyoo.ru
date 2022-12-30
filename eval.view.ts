@@ -73,7 +73,7 @@ namespace $.$$ {
 			
 			code = code.replaceAll(
 				/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig,
-				( found, indent, name )=> `spy( ()=>[ "${indent}${name} =", ${name} ] );${found}`
+				( found, indent, name )=> `__spy__( ()=>[ "${indent}${name} =", ${name} ] );${found}`
 			)
 			
 			return code
@@ -81,6 +81,11 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		execute() {
+			
+			if( !this.run() ) return []
+			
+			this.code()
+			this.result([])
 			
 			const console = new Proxy( this.$.console, {
 				get: ( target, field )=> {
@@ -94,10 +99,14 @@ namespace $.$$ {
 					
 				}
 			} )
-			const spy = this.spy.bind( this )
 			
-			return [ '=', $mol_try( ()=> eval( this.code_enhanced() ) ) ]
+			const __spy__ = this.spy.bind( this )
 			
+			const __res__ = [ '=', $mol_try( ()=> eval( this.code_enhanced() ) ) ]
+			__spy__( ()=> __res__ )
+			this.spy_run()
+			
+			return __res__
 		}
 		
 		@ $mol_mem
@@ -113,7 +122,7 @@ namespace $.$$ {
 			const row = this.Code().View().Row( line )
 			
 			const shift = this.code_enhanced().split('\n')[ line - 1 ]
-				?.match( /^\w*spy\( \(\).*?\);/ )?.[0]?.length ?? 0
+				?.match( /^\w*__spy__\( \(\).*?\);/ )?.[0]?.length ?? 0
 			
 			return row.find_pos( col - 1 - shift )
 			
@@ -137,22 +146,28 @@ namespace $.$$ {
 			return this.run() ? super.Error_mark() : null as any
 		}
 		
-		spy( args: ()=> any[] ) {
-			Promise.resolve().then( ()=> {
-				try {
-					this.result([ ... this.result(), args() ])
-				} catch {}
-			} )
+		spy_queue = [] as ( ()=> any[] )[]
+		
+		@ $mol_action
+		spy_run() {
+			this.result([
+				... this.result(),
+				... this.spy_queue.splice(0).map( task => task() ),
+			])
+		}
+		
+		spy( task: ()=> any[] ) {
+			
+			this.spy_queue.push( task )
+			if( this.spy_queue.length > 1 ) return
+			
+			Promise.resolve().then( ()=> this.spy_run() )
+			
 		}
 
 		@ $mol_mem
-		result( next?: any[] ) {
-			
-			this.code()
-			if( next ) return next
-			
-			return [ this.execute() ]
-			
+		result( next = [] as any[] ) {
+			return next
 		}
 		
 		@ $mol_mem
