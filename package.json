@@ -124,6 +124,7 @@
     "$mol_media",
     "$mol_state_local",
     "$mol_hotkey",
+    "$mol_keyboard_code",
     "$mol_keyboard",
     "$mol_icon_plus",
     "$mol_icon",
