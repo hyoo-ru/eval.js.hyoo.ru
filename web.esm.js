@@ -1999,6 +1999,39 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const cacthed = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (typeof error !== 'object')
+            return false;
+        if (error instanceof Promise)
+            $mol_fail_hidden(error);
+        if (cacthed.get(error))
+            return false;
+        cacthed.set(error, true);
+        return true;
+    }
+    $.$mol_fail_catch = $mol_fail_catch;
+})($ || ($ = {}));
+//mol/fail/catch/catch.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_log(error) {
+        if (error instanceof Promise)
+            return false;
+        if (!$mol_fail_catch(error))
+            return false;
+        console.error(error);
+        return true;
+    }
+    $.$mol_fail_log = $mol_fail_log;
+})($ || ($ = {}));
+//mol/fail/log/log.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_wire_log extends $mol_object2 {
         static watch(task) {
             return task;
@@ -2036,6 +2069,9 @@ var $;
         static active() {
             try {
                 this.watch()?.();
+            }
+            catch (error) {
+                $mol_fail_log(error);
             }
             finally {
                 for (const pub of $mol_wire_auto().pub_list) {
@@ -2285,39 +2321,6 @@ var $;
     self.addEventListener('resize', event => $mol_window.resizes(event));
 })($ || ($ = {}));
 //mol/window/window.web.ts
-;
-"use strict";
-var $;
-(function ($) {
-    const cacthed = new WeakMap();
-    function $mol_fail_catch(error) {
-        if (typeof error !== 'object')
-            return false;
-        if (error instanceof Promise)
-            $mol_fail_hidden(error);
-        if (cacthed.get(error))
-            return false;
-        cacthed.set(error, true);
-        return true;
-    }
-    $.$mol_fail_catch = $mol_fail_catch;
-})($ || ($ = {}));
-//mol/fail/catch/catch.ts
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_log(error) {
-        if (error instanceof Promise)
-            return false;
-        if (!$mol_fail_catch(error))
-            return false;
-        console.error(error);
-        return true;
-    }
-    $.$mol_fail_log = $mol_fail_log;
-})($ || ($ = {}));
-//mol/fail/log/log.ts
 ;
 "use strict";
 var $;

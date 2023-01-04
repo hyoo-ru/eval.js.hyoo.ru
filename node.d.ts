@@ -541,6 +541,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail_catch(error: unknown): boolean;
+}
+
+declare namespace $ {
+    function $mol_fail_log(error: unknown): boolean;
+}
+
+declare namespace $ {
     class $mol_wire_log extends $mol_object2 {
         static watch(task?: () => any): (() => any) | undefined;
         static track(fiber: $mol_wire_fiber<any, any, any>): any;
@@ -670,14 +678,6 @@ declare namespace $ {
             height: number;
         };
     }
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: unknown): boolean;
-}
-
-declare namespace $ {
-    function $mol_fail_log(error: unknown): boolean;
 }
 
 declare namespace $ {
