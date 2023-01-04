@@ -73,7 +73,7 @@ namespace $.$$ {
 			
 			code = code.replaceAll(
 				/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig,
-				( found, indent, name )=> `__spy__( ()=>[ "${indent}${name} =", ${name} ] );${found}`
+				( found, indent, name )=> `__spy__( "${indent}${name} =", ()=>[ ${name} ] );${found}`
 			)
 			
 			return code
@@ -93,7 +93,7 @@ namespace $.$$ {
 					if( typeof target[ field ] !== 'function' ) return target[ field ]
 					
 					return ( ... args: any[] )=> {
-						this.spy( ()=> [ `${String(field)}:`, ... args ] )
+						this.spy( `${String(field)}:`, ()=> [ ... args ] )
 						return target[ field ]( ... args )
 					}
 					
@@ -103,7 +103,7 @@ namespace $.$$ {
 			const __spy__ = this.spy.bind( this )
 			
 			const __res__ = [ '=', $mol_try( ()=> eval( this.code_enhanced() ) ) ]
-			__spy__( ()=> __res__ )
+			__spy__( '=', ()=> __res__.slice(1) )
 			this.spy_run()
 			
 			return __res__
@@ -122,7 +122,7 @@ namespace $.$$ {
 			const row = this.Code().View().Row( line )
 			
 			const shift = this.code_enhanced().split('\n')[ line - 1 ]
-				?.match( /^\w*__spy__\( \(\).*?\);/ )?.[0]?.length ?? 0
+				?.match( /^\w*__spy__\( .*?\);/ )?.[0]?.length ?? 0
 			
 			return row.find_pos( col - 1 - shift )
 			
@@ -146,19 +146,19 @@ namespace $.$$ {
 			return this.run() ? super.Error_mark() : null as any
 		}
 		
-		spy_queue = [] as ( ()=> any[] )[]
+		spy_queue = [] as [ string, ()=> any[] ][]
 		
 		@ $mol_action
 		spy_run() {
 			this.result([
 				... this.result(),
-				... this.spy_queue.splice(0).map( task => task() ),
+				... this.spy_queue.splice(0).map( ([ name, task ])=> [ name, ... ( [] as any[] ).concat( $mol_try( ()=> task() ) ) ] ),
 			])
 		}
 		
-		spy( task: ()=> any[] ) {
+		spy( name: string, task: ()=> any[] ) {
 			
-			this.spy_queue.push( task )
+			this.spy_queue.push([ name, task ])
 			if( this.spy_queue.length > 1 ) return
 			
 			Promise.resolve().then( ()=> this.spy_run() )
@@ -172,6 +172,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		logs() {
+			this.execute()
 			return this.result().map( (_,index)=> this.Log( index ) )
 		}
 		
