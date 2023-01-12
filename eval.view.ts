@@ -102,7 +102,14 @@ namespace $.$$ {
 			
 			const __spy__ = this.spy.bind( this )
 			
-			const __res__ = [ '=', $mol_try( ()=> eval( this.code_enhanced() ) ) ]
+			let __res__: any[]
+			
+			try {
+				__res__ = [ '=', eval( this.code_enhanced() ) ]
+			} catch( error ) {
+				__res__ = [ '=', error ]
+			}
+			
 			__spy__( '=', ()=> __res__.slice(1) )
 			this.spy_run()
 			
