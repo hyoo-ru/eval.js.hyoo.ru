@@ -2,10 +2,6 @@
 	flex: 0 0 auto;
 }
 
-[hyoo_js_eval_menu] {
-	padding: var(--mol_gap_block);
-}
-
 [hyoo_js_eval_code_page] {
 	flex: 1 0 auto;
 }
