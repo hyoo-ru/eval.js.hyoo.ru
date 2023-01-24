@@ -2047,6 +2047,7 @@ declare namespace $ {
         code: RegExp;
         'code-indent': RegExp;
         table: RegExp;
+        grid: RegExp;
         cut: RegExp;
         block: RegExp;
     }>;
