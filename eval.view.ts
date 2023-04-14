@@ -88,13 +88,13 @@ namespace $.$$ {
 			this.result([])
 			
 			const console = new Proxy( this.$.console, {
-				get: ( target, field )=> {
+				get: ( target, field: keyof Console )=> {
 					
 					if( typeof target[ field ] !== 'function' ) return target[ field ]
 					
 					return ( ... args: any[] )=> {
 						this.spy( `${String(field)}:`, ()=> [ ... args ] )
-						return target[ field ]( ... args )
+						return ( target[ field ] as any )( ... args )
 					}
 					
 				}
