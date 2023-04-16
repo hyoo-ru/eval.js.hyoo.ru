@@ -3384,6 +3384,7 @@ var $;
             return import(uri);
         }
         static script(uri) {
+            $mol_wire_solid();
             return $mol_wire_sync(this).script_async(uri);
         }
         static script_async(uri) {
