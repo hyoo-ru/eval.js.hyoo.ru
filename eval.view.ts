@@ -159,7 +159,13 @@ namespace $.$$ {
 		spy_run() {
 			this.result([
 				... this.result(),
-				... this.spy_queue.splice(0).map( ([ name, task ])=> [ name, ... ( [] as any[] ).concat( $mol_try( ()=> task() ) ) ] ),
+				... this.spy_queue.splice(0).map( ([ name, task ])=> {
+					try {
+						return ( [ name ] as any[] ).concat( task() )
+					} catch( error ) {
+						// return [ name, error ]
+					}
+				} ).filter( Boolean ),
 			])
 		}
 		
