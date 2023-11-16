@@ -22,10 +22,6 @@
 	flex: 1 0 40rem;
 }
 
-[hyoo_js_eval_result_page_body] {
-	padding: var(--mol_gap_block);
-}
-
 [hyoo_js_eval_error_icon] {
 	color: var(--mol_theme_focus);
 }
