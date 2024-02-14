@@ -6859,7 +6859,7 @@ var $;
 		}
 		Copy(){
 			const obj = new this.$.$mol_button_copy();
-			(obj.hint) = () => (this.$.$mol_locale.text("$mol_text_code_Copy_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_text_code_Copy_hint")));
 			(obj.text) = () => ((this.text_export()));
 			return obj;
 		}
@@ -8215,7 +8215,7 @@ var $;
 		}
 		Menu_page(){
 			const obj = new this.$.$mol_page();
-			(obj.title) = () => (this.$.$mol_locale.text("$hyoo_js_eval_Menu_page_title"));
+			(obj.title) = () => ((this.$.$mol_locale.text("$hyoo_js_eval_Menu_page_title")));
 			(obj.tools) = () => ([
 				(this.Clear()), 
 				(this.Source()), 
@@ -8230,7 +8230,7 @@ var $;
 		Perf(){
 			const obj = new this.$.$mol_link_iconed();
 			(obj.title) = () => ("");
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_js_eval_Perf_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_js_eval_Perf_hint")));
 			(obj.uri) = () => ((this.perf()));
 			return obj;
 		}
@@ -8246,7 +8246,7 @@ var $;
 			const obj = new this.$.$mol_check_icon();
 			(obj.Icon) = () => ((this.Bookmark_icon()));
 			(obj.checked) = (next) => ((this.bookmark(next)));
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_js_eval_Bookmark_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_js_eval_Bookmark_hint")));
 			return obj;
 		}
 		Run_icon(){
@@ -8307,7 +8307,7 @@ var $;
 		}
 		Code_page(){
 			const obj = new this.$.$mol_page();
-			(obj.title) = () => (this.$.$mol_locale.text("$hyoo_js_eval_Code_page_title"));
+			(obj.title) = () => ((this.$.$mol_locale.text("$hyoo_js_eval_Code_page_title")));
 			(obj.bring) = () => ((this.bring()));
 			(obj.tools) = () => ([
 				(this.Perf()), 
