@@ -1825,6 +1825,13 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => $.$mol_fail_log = () => false);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
 (function ($) {
     $mol_wire_log.active();
 })($ || ($ = {}));
