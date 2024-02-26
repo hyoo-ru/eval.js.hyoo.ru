@@ -4017,9 +4017,13 @@ var $;
                 return exists;
             if (next === exists)
                 return exists;
-            if (next)
+            if (next) {
                 this.parent().exists(true);
-            this.ensure();
+                this.ensure();
+            }
+            else {
+                this.drop();
+            }
             this.reset();
             return next;
         }
@@ -4308,6 +4312,9 @@ var $;
         }
         ensure() {
             throw new Error('$mol_file_web.ensure() not implemented');
+        }
+        drop() {
+            throw new Error('$mol_file_web.drop() not implemented');
         }
         sub() {
             throw new Error('$mol_file_web.sub() not implemented');
