@@ -193,6 +193,14 @@ namespace $.$$ {
 		log( index: number ) {
 			return this.result()[ index ]
 		}
+		
+		html( next = '' ) {
+			const root = this.UI().dom_node() as HTMLElement
+			root.innerHTML = next
+			return new Proxy( ( query: string )=> root.querySelector( query ), {
+				get: ( $, id: string )=> $( '#' + id ),
+			} )
+		}
 
 	}
 	
