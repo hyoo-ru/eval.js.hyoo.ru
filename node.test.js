@@ -5062,7 +5062,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus-visible {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
+    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus-visible {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -8374,6 +8374,11 @@ var $;
 			(obj.sub) = () => ([(this.Results_close_icon())]);
 			return obj;
 		}
+		UI(){
+			const obj = new this.$.$mol_list();
+			(obj.sub_visible) = () => (null);
+			return obj;
+		}
 		log(id){
 			return [];
 		}
@@ -8395,7 +8400,7 @@ var $;
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.result_label()));
 			(obj.tools) = () => ([(this.Results_close())]);
-			(obj.body) = () => ([(this.Result())]);
+			(obj.body) = () => ([(this.UI()), (this.Result())]);
 			return obj;
 		}
 		Placeholder(){
@@ -8441,6 +8446,7 @@ var $;
 	($mol_mem(($.$hyoo_js_eval.prototype), "Code_page"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Results_close_icon"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Results_close"));
+	($mol_mem(($.$hyoo_js_eval.prototype), "UI"));
 	($mol_mem_key(($.$hyoo_js_eval.prototype), "Log"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Result"));
 	($mol_mem(($.$hyoo_js_eval.prototype), "Result_page"));
@@ -8976,7 +8982,7 @@ var $;
 ;
 "use strict";
 var $;
-(function ($) {
+(function ($_1) {
     var $$;
     (function ($$) {
         class $hyoo_js_eval extends $.$hyoo_js_eval {
@@ -9115,6 +9121,13 @@ var $;
             log(index) {
                 return this.result()[index];
             }
+            html(next = '') {
+                const root = this.UI().dom_node();
+                root.innerHTML = next;
+                return new Proxy((query) => root.querySelector(query), {
+                    get: ($, id) => $('#' + id),
+                });
+            }
         }
         __decorate([
             $mol_mem
@@ -9165,7 +9178,7 @@ var $;
             $mol_mem_key
         ], $hyoo_js_eval.prototype, "log", null);
         $$.$hyoo_js_eval = $hyoo_js_eval;
-    })($$ = $.$$ || ($.$$ = {}));
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 
 ;
