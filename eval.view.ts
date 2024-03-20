@@ -170,7 +170,6 @@ namespace $.$$ {
 						return ( [ name ] as any[] ).concat( task() )
 					} catch( error ) {
 						if( error instanceof ReferenceError ) {
-							console.log( error )
 							this.spy_queue.push([ name, task ])
 							if( !this._defer_spy ) {
 								this._defer_spy = setTimeout( ()=> {
