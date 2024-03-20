@@ -87,6 +87,9 @@ namespace $.$$ {
 			this.code()
 			this.result([])
 			
+			clearTimeout( this._defer_spy )
+			this.spy_queue.length = 0
+		
 			const console = new Proxy( this.$.console, {
 				get: ( target, field: keyof Console )=> {
 					
@@ -155,15 +158,29 @@ namespace $.$$ {
 		
 		spy_queue = [] as [ string, ()=> any[] ][]
 		
+		_defer_spy: any = 0
+		
 		@ $mol_action
 		spy_run() {
+			if( !this.run() ) return
 			this.result([
 				... this.result(),
 				... this.spy_queue.splice(0).map( ([ name, task ])=> {
 					try {
 						return ( [ name ] as any[] ).concat( task() )
 					} catch( error ) {
-						// return [ name, error ]
+						if( error instanceof ReferenceError ) {
+							console.log( error )
+							this.spy_queue.push([ name, task ])
+							if( !this._defer_spy ) {
+								this._defer_spy = setTimeout( ()=> {
+									this._defer_spy = 0
+									this.spy_run()
+								}, 100 )
+							}
+						} else {
+							return [ name, error ]
+						}
 					}
 				} ).filter( Boolean ),
 			])
@@ -184,7 +201,19 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		rejection_listener() {
+			return new $mol_dom_listener(
+				window,
+				'unhandledrejection',
+				( event: PromiseRejectionEvent )=> {
+					this.spy( 'Unhandled', ()=> event.reason )
+				}
+			)
+		}
+		
+		@ $mol_mem
 		logs() {
+			this.rejection_listener()
 			this.execute()
 			return this.result().map( (_,index)=> this.Log( index ) )
 		}
