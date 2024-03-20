@@ -9055,6 +9055,8 @@ var $;
                     return [];
                 this.code();
                 this.result([]);
+                clearTimeout(this._defer_spy);
+                this.spy_queue.length = 0;
                 const console = new Proxy(this.$.console, {
                     get: (target, field) => {
                         if (typeof target[field] !== 'function')
@@ -9104,7 +9106,10 @@ var $;
                 return this.run() ? super.Error_mark() : null;
             }
             spy_queue = [];
+            _defer_spy = 0;
             spy_run() {
+                if (!this.run())
+                    return;
                 this.result([
                     ...this.result(),
                     ...this.spy_queue.splice(0).map(([name, task]) => {
@@ -9112,6 +9117,19 @@ var $;
                             return [name].concat(task());
                         }
                         catch (error) {
+                            if (error instanceof ReferenceError) {
+                                console.log(error);
+                                this.spy_queue.push([name, task]);
+                                if (!this._defer_spy) {
+                                    this._defer_spy = setTimeout(() => {
+                                        this._defer_spy = 0;
+                                        this.spy_run();
+                                    }, 100);
+                                }
+                            }
+                            else {
+                                return [name, error];
+                            }
                         }
                     }).filter(Boolean),
                 ]);
@@ -9125,7 +9143,13 @@ var $;
             result(next = []) {
                 return next;
             }
+            rejection_listener() {
+                return new $mol_dom_listener(window, 'unhandledrejection', (event) => {
+                    this.spy('Unhandled', () => event.reason);
+                });
+            }
             logs() {
+                this.rejection_listener();
                 this.execute();
                 return this.result().map((_, index) => this.Log(index));
             }
@@ -9182,6 +9206,9 @@ var $;
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "result", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_js_eval.prototype, "rejection_listener", null);
         __decorate([
             $mol_mem
         ], $hyoo_js_eval.prototype, "logs", null);
