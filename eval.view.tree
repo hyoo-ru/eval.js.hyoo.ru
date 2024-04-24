@@ -78,7 +78,7 @@ $hyoo_js_eval $mol_book2
 				<= Results_close $mol_link
 					arg * run \false
 					sub /
-						<= Results_close_icon $mol_icon_cross
+						<= Results_close_icon $mol_icon_close
 			body /
 				<= UI $mol_list sub_visible null
 				<= Result $mol_list
