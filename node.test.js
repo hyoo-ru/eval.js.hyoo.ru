@@ -6113,7 +6113,7 @@ var $;
             Tools: {
                 flex: {
                     basis: 'auto',
-                    grow: 1000,
+                    grow: 0,
                     shrink: 1,
                 },
                 display: 'flex',
