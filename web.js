@@ -7653,6 +7653,9 @@ var $;
 			const obj = new this.$.$mol_view();
 			return obj;
 		}
+		align(){
+			return [-.5, -.5];
+		}
 		offset(){
 			return [0, 0];
 		}
@@ -7679,16 +7682,18 @@ var $;
                 const anchor_rect = this.Anchor()?.view_rect();
                 if (!anchor_rect)
                     return null;
+                const offset = this.offset();
+                const align = this.align();
                 const left = Math.floor((prev?.left ?? 0)
                     - (self_rect?.left ?? 0)
-                    - (self_rect?.width ?? 0) / 2
+                    + (self_rect?.width ?? 0) * align[0]
                     + (anchor_rect?.left ?? 0)
-                    + this.offset()[0] * (anchor_rect?.width ?? 0));
+                    + offset[0] * (anchor_rect?.width ?? 0));
                 const top = Math.floor((prev?.top ?? 0)
                     - (self_rect?.top ?? 0)
-                    - (self_rect?.height ?? 0) / 2
+                    + (self_rect?.height ?? 0) * align[1]
                     + (anchor_rect?.top ?? 0)
-                    + this.offset()[1] * (anchor_rect?.height ?? 0));
+                    + offset[1] * (anchor_rect?.height ?? 0));
                 return { left, top };
             }
             transform() {
