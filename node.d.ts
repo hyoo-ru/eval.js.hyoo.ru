@@ -446,6 +446,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_try<Result>(handler: () => Result): Result | Error;
+}
+
+declare namespace $ {
     function $mol_fail_log(error: unknown): boolean;
 }
 
@@ -3120,10 +3124,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_try<Result>(handler: () => Result): Result | Error;
-}
-
-declare namespace $ {
 
 	type $mol_text_code__text_mol_dump_value_1 = $mol_type_enforce<
 		ReturnType< $mol_dump_value['simple'] >
@@ -3304,7 +3304,7 @@ declare namespace $ {
     function $mol_assert_not(value: any): void;
     function $mol_assert_fail(handler: () => any, ErrorRight: string | typeof Error | typeof Promise): any;
     function $mol_assert_like<Value>(...args: [Value, Value, ...Value[]]): void;
-    function $mol_assert_unique(...args: [any, any, ...any[]]): void;
+    function $mol_assert_unique(...args: [any, any, ...any[]]): undefined;
     function $mol_assert_equal<Value>(...args: Value[]): undefined;
 }
 
