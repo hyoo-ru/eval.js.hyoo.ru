@@ -6681,6 +6681,7 @@ var $;
 			return {
 				...(super.attr()), 
 				"src": (this.uri()), 
+				"title": (this.hint()), 
 				"alt": (this.title()), 
 				"loading": (this.loading()), 
 				"decoding": (this.decoding()), 
