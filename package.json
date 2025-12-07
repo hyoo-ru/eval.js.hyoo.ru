@@ -234,7 +234,6 @@
     "$mol_wire_log"
   ],
   "dependencies": {
-    "internal": "*",
     "jsdom": "*"
   }
 }
