@@ -175,6 +175,7 @@
     "$mol_button",
     "$mol_speck",
     "$mol_button_typed",
+    "$mol_dom_event",
     "$mol_icon_brightness_4",
     "$mol_icon_brightness",
     "$mol_list",
