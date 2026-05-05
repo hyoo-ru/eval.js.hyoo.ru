@@ -71,9 +71,16 @@ namespace $.$$ {
 			
 			let code = this.code()
 			
+			// var logs
 			code = code.replaceAll(
 				/^([ \t]*)(?:const|var|let|class|function) +(\w+)/mig,
 				( found, indent, name )=> `__spy__( "${indent}${name} =", ()=>[ ${name} ] );${found}`
+			)
+			
+			// decors
+			code = code.replaceAll(
+				/^([ \t]*)@\s*([\w$]+)\s+([\w$]+)/mig,
+				( found, indent, decor, prop )=> `${indent}static #${prop} = ${decor}( this.prototype, "${prop}" )\n${indent}${prop}`
 			)
 			
 			return code
