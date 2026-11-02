@@ -4521,6 +4521,25 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    class $mol_media extends $mol_object2 {
+        static match(query, next) {
+            if (next !== undefined)
+                return next;
+            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
+            res.onchange = () => this.match(query, res.matches);
+            return res.matches;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_media, "match", null);
+    $.$mol_media = $mol_media;
+})($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -4627,25 +4646,6 @@ var $;
         $mol_action
     ], $mol_state_arg, "go", null);
     $.$mol_state_arg = $mol_state_arg;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_media extends $mol_object2 {
-        static match(query, next) {
-            if (next !== undefined)
-                return next;
-            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
-            res.onchange = () => this.match(query, res.matches);
-            return res.matches;
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_media, "match", null);
-    $.$mol_media = $mol_media;
 })($ || ($ = {}));
 
 ;
@@ -5719,13 +5719,14 @@ var $;
             return false;
         return null;
     }
+    // Get once because chrome switches to light on print
+    const base = $.$mol_media.match('(prefers-color-scheme: light)');
     /**
      * Switcher between light/dark themes (usually for `mol_theme_auto` plugin).
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_lights_demo
      */
     function $mol_lights(next) {
         const arg = parse(this.$mol_state_arg.value('mol_lights'));
-        const base = this.$mol_media.match('(prefers-color-scheme: light)');
         if (next === undefined) {
             return arg ?? this.$mol_state_local.value('$mol_lights') ?? base;
         }
@@ -9601,16 +9602,21 @@ var $;
                     return null;
                 const offset = this.offset();
                 const align = this.align();
-                const left = Math.floor((prev?.left ?? 0)
+                const width = self_rect?.width ?? 0;
+                const height = self_rect?.height ?? 0;
+                let left = Math.floor((prev?.left ?? 0)
                     - (self_rect?.left ?? 0)
-                    + (self_rect?.width ?? 0) * align[0]
+                    + width * align[0]
                     + (anchor_rect?.left ?? 0)
                     + offset[0] * (anchor_rect?.width ?? 0));
-                const top = Math.floor((prev?.top ?? 0)
+                let top = Math.floor((prev?.top ?? 0)
                     - (self_rect?.top ?? 0)
-                    + (self_rect?.height ?? 0) * align[1]
+                    + height * align[1]
                     + (anchor_rect?.top ?? 0)
                     + offset[1] * (anchor_rect?.height ?? 0));
+                const size = this.$.$mol_window.size();
+                left = Math.max(0, Math.min(left, size.width - width));
+                top = Math.max(0, Math.min(top, size.height - height));
                 return { left, top };
             }
             transform() {
